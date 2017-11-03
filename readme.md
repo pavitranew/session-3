@@ -2,25 +2,21 @@
 
 Today we continue to work with NPM, responsive design and start looking at Expressjs - exploring some of its capabilities.
 
-##Homework
+## Homework
 
 * download this repo and review the steps below - try to get the communication between the form and mLab working. 
-
 * upload a finished version to github (remember to use a .gitignore file)
-
 * see the session-3-work (working branch) repo for an example of a working repo.
 
-##NPM Review
+## NPM Review
 
 https://github.com/sass/node-sass#command-line-interface
 
 https://www.browsersync.io/docs/command-line
 
+## GIT and GITHUB
 
-
-##GIT and GITHUB
-
-Since we've just created a nice reusable setup we should save it. 
+Since we've created a nice, reusable package.json we should save it for future use. 
 
 Git - a version control system originally invented for use developing Linux by Linus Torvalds. It is the standard version tool and integrates with Github to permit collaboration.
 
@@ -33,7 +29,7 @@ There is a handy and very simple tutorial for Git on [the Git Website](https://t
 git init
 ```
 
-Configuring Git - only if you haven't done this before, and you only need to do this once:
+Configuring Git for the first time - only if you haven't done this before - you only need to do this once:
 
 ```
 git config
@@ -109,10 +105,10 @@ git push -u origin master
 
 Finally - when downloading a github repo use the `clone` method to move it to your local disk while retaining the git history and branches.
 
-Use of MSCode as a Git / diff client?
+Use of VS Code as a Git / diff client?
 
 
-##Responsive Navigation
+## Responsive Navigation continued
 
 Move all nav related css into a new partial `_nav.scss` and import:
 
