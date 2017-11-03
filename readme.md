@@ -199,24 +199,22 @@ Show the logo in small screens to use as a button (e.g. hamburger icon) and hide
 
 ```css
 .logo {
-	display: block;
-	max-width:100%;
-	img {
-		padding: 0.25rem;
-		width: 2rem;
-	}
-	@media (min-width: $break-two) {
-		max-width: 0;
-		overflow: hidden;
-	}
+  display: block;
+  max-width:100%;
+  img {
+    padding: 0.25rem;
+    width: 2rem;
+  }
+  @media (min-width: $break-two) {
+    max-width: 0;
+    overflow: hidden;
+  }
 }
 ```
 
 Make clicking on the logo show the menu on narrow screens:
 
-```
-$0.classList
-
+```js
 window.matchMedia('only screen and (max-width: 700px)')
 
 window.matchMedia('only screen and (max-width: 700px)').matches
@@ -248,16 +246,16 @@ Add to `_nav.scss`:
 Adjust the display of the list items moving most of the existing CSS into the media query.
 
 ```css
-	li {
-		padding: 0.5rem;
-		align-items: center; 
-		@media screen and (min-width: $break-two) {
-			display: flex;
-			flex: 1;
-			justify-content: center;
-			text-align: center;
-		}
-	}
+  li {
+    padding: 0.5rem;
+    align-items: center; 
+    @media screen and (min-width: $break-two) {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      text-align: center;
+    }
+  }
 ```
 
 Remove display: flex from the default state of nav and at it to the wide screen only:
@@ -290,7 +288,7 @@ Other cleanup items?
 
 Make the menu overlay the content:
 
-```
+```css
   ul {
     flex-direction: column;
     margin: 0;
@@ -312,7 +310,7 @@ Make the menu overlay the content:
 
 Maximize space:
 
-```
+```css
 .site-wrap {
   max-width: 780px;
   margin: 10px auto;
@@ -340,28 +338,28 @@ Maximize space:
 * Reminder - use the meta tag `<meta name="viewport" content="width=device-width, initial-scale=1.0">` to ensure this works on devices
 
 
-##Babel
+## Babel
 
 Install the dependencies babel-cli and babel-preset-es2015 and add presets to package.json.
 
-`$ sudo npm install babel-cli --save-dev`
+`$ npm install babel-cli --save-dev`
 
-`$ sudo npm install --save-dev babel-preset-es2015`
+`$ npm install --save-dev babel-preset-es2015`
 
 Here is the documentation for [babel-cli](https://babeljs.io/docs/usage/cli/)
 
 Add a babel script (note the output path references a min folder we need to create) and babel presets to package.json:
 
-```
+```js
 {
   "name": "basic-dom-dd2",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch-node-sass": "node-sass --watch scss/styles.scss --output public/css/  --source-map true",
-    "start": "browser-sync start --browser \"google chrome\" --server 'public' --files 'public'",
-    "babel": "babel public/js/main.js --watch --source-maps --out-file public/js/min/main-compiled.js",
+    "watch-node-sass": "node-sass --watch scss/styles.scss --output app/css/  --source-map true",
+    "start": "browser-sync start --browser \"google chrome\" --server 'app' --files 'app'",
+    "babel": "babel app/js/main.js --watch --source-maps --out-file app/js/min/main-compiled.js",
     "boom!": "concurrently \"npm run start\" \"npm run watch-node-sass\" "
   },
   "author": "",
@@ -382,9 +380,11 @@ Add a babel script (note the output path references a min folder we need to crea
 
 ```
 
+Create the `min` folder in app/js.
+
 Add babel to our concurrent commands:
 
-```
+```bash
 "boom!": "concurrently \"npm run start\" \"npm run watch-node-sass\"  \"npm run babel\" "
 ```
 
