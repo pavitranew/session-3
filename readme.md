@@ -22,14 +22,14 @@ Git - a version control system originally invented for use developing Linux by L
 
 There is a handy and very simple tutorial for Git on [the Git Website](https://try.github.io/levels/1/challenges/1) which is highly recommended for those new to git and github.
 
-1. make sure terminal is in the `basic-dom` directory using `cd` (drag-and-drop, copy paste)
+1. make sure terminal is in the correct directory using `cd` (drag-and-drop, copy paste)
 1. initialize the repo:
 
 ```
 git init
 ```
 
-Configuring Git for the first time - only if you haven't done this before - you only need to do this once:
+Configuring Git for the first time - only if you haven't done this before:
 
 ```
 git config
@@ -68,7 +68,7 @@ git checkout <new branchname>
 git branch
 ```
 
-To merge branches
+To merge branches:
 
 * make sure the branch you want to merge is clear (`$ git status`)
 * checkout the branch you want to merge into
@@ -91,7 +91,6 @@ Pushing Files to Remote Repos - Github
 Note: always create a .gitignore file to prevent local working/utility files from being pushed.
 
 ```
-.sass_cache
 .DS_store
 node_modules
 ```
