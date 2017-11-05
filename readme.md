@@ -119,14 +119,10 @@ Nest the CSS rules for the nav:
 ```css
 nav {
   display: flex;
-  background: #007eb6;
-  top: 0;
-  width: 100%;
-  transition: all 0.5s;
-  position: relative;
-  z-index: 1; 
+  background: $link;
   .fixed-nav & {
     position: fixed;
+    top: 0;
     box-shadow: 0 5px 3px rgba(0, 0, 0, 0.1); 
   }
   ul {
@@ -184,38 +180,39 @@ Since we are using the logo as a hamburger a different strategy is needed.
 // }
 ```
 
-Get the navigation to display vertically on small screens. 
-
-Hide the nav-liks initially on small screens while maintaining the flex display characteristics on wide:
-
 ```css
-nav ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  // display: flex;
-  flex:1;
-  min-height: 2.25rem;
-  // flex-direction: column;
-  display: none;
-  @media (min-width: $break-two){
-    display: flex;
-    flex-direction: row;
-  } 
-} 
+.logo img {
+  padding-top: 0.25rem;
+  width: 2rem;
+  margin-left: 0.5rem;
+}
 ```
 
+Get the navigation to display vertically on small screens. 
+
+Hide the nav-links initially on small screens while maintaining the flex display characteristics on wide:
+
 ```css
-nav li {
-  
-  // text-align: center;
-  // display: flex;
-  
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    flex:1;
+    min-height: 2.25rem;
+    display: none;
+    @media (min-width: $break-two){
+      display: flex;
+    }
+  }
+```
+
+Refactor to simplify list items:
+
+```css
+  li {
   padding: 1rem;
   @media (min-width: $break-two){
     flex: 1;
-    justify-content: center;
-    align-items: center;
   }
 }
 ```
@@ -232,10 +229,6 @@ function showMenu(){
 }
 ```
 
-```js
-
-```
-
 Add to `_nav.scss`:
 
 ```css
@@ -244,7 +237,7 @@ Add to `_nav.scss`:
 }
 ```
 
-Hide the hamburger icon after it has been clicked on:
+Hide the hamburger icon after a link has been clicked:
 
 ```js
 window.onhashchange = function () {
@@ -259,58 +252,7 @@ window.onhashchange = function () {
 }
 ```
 
-Other cleanup items?
-
-Make the menu overlay the content:
-
-```css
-  ul {
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: none;
-    flex:1;
-    min-height: 2.25rem;
-    position: absolute;
-    background: #007eb6;
-    z-index: 1000;
-    width: 100%;
-    @media screen and (min-width: $break-two) {
-      display: flex;
-      flex-direction: row;
-    }
-  }
-```
-
-Maximize space:
-
-```css
-.site-wrap {
-  max-width: 780px;
-  margin: 10px auto;
-  background: white;
-  padding: 10px;
-  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.05);
-  transform: scale(0.98);
-  transition: transform 0.5s;
-  @media (min-width: $break-two){
-    padding: 10px;
-    margin: 20px auto;
-  }
-  body.fixed-nav & {
-    transform: scale(1); 
-  }
-  h1, h2 {
-    font-weight: normal;
-  }
-  ul {
-    padding: 1rem;
-  }
-}
-```
-
-* Reminder - use the meta tag `<meta name="viewport" content="width=device-width, initial-scale=1.0">` to ensure this works on devices
+* Reminder - use the meta tag `<meta name="viewport" content="width=device-width, initial-scale=1.0">` to ensure responsive design works on devices.
 
 
 ## Babel
