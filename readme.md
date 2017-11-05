@@ -115,7 +115,7 @@ Move all nav related css into a new partial `_nav.scss` and import:
 `@import "imports/nav";`
 
 
-Nest the CSS rules:
+Nest the CSS rules for the nav:
 
 ```css
 nav {
@@ -167,47 +167,56 @@ nav {
 
 ```
 
-Get the navigation to display vertically on small screens. 
-
-Flip the default  `<ul>` flex direction to column:
-
-```css
-  ul {
-    ...
-    flex-direction: column;
-    @media screen and (min-width: $break-two) {
-      flex-direction: row;
-    }
-  }
-```
-
-Hide the nav-liks initially on small screens while maintaining the flex display characteristics on wide:
-
-```css
-  ul {
-    ...
-    display: none;
-    // display: flex;
-    @media (min-width: $break-two){
-      display: flex;
-      flex-direction: row;
-    }
-  }
-```
-
-Show the logo in small screens to use as a button (e.g. hamburger icon) and hide it on wide screens:
+Since we are using the logo as a hamburger a different strategy is needed.
 
 ```css
 .logo {
   display: block;
-  max-width:100%;
-  img {
-    padding: 0.25rem;
-    width: 2rem;
+  @media (min-width: $break-two){
+    display: none;
   }
-  @media (min-width: $break-two) {
-    max-width: 0;
-    overflow: hidden;
+  // max-width:0;
+  // overflow: hidden;
+  // transition: all 0.5s;
+}
+
+// .fixed-nav .logo {
+//   max-width:500px;
+// }
+```
+
+Get the navigation to display vertically on small screens. 
+
+Hide the nav-liks initially on small screens while maintaining the flex display characteristics on wide:
+
+```css
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  // display: flex;
+  flex:1;
+  min-height: 2.25rem;
+  // flex-direction: column;
+  display: none;
+  @media (min-width: $break-two){
+    display: flex;
+    flex-direction: row;
+  } 
+} 
+```
+
+```css
+nav li {
+  
+  // text-align: center;
+  // display: flex;
+  
+  padding: 1rem;
+  @media (min-width: $break-two){
+    flex: 1;
+    justify-content: center;
+    align-items: center;
   }
 }
 ```
@@ -215,64 +224,31 @@ Show the logo in small screens to use as a button (e.g. hamburger icon) and hide
 Make clicking on the logo show the menu on narrow screens:
 
 ```js
-window.matchMedia('only screen and (max-width: 700px)')
+const logo = document.querySelector('.logo');
+logo.addEventListener('click', showMenu);
 
-window.matchMedia('only screen and (max-width: 700px)').matches
+function showMenu(){
+  document.body.classList.toggle('showmenu');
+  event.preventDefault();
+}
 ```
 
 ```js
-const logo = document.querySelector('.logo');
-if (document.documentElement.clientWidth <= 740) {
-  logo.addEventListener('click', showMenu);
-}
 
-function showMenu(e){
-  if (window.matchMedia('only screen and (max-width: 740px)').matches){
-    document.body.classList.toggle('show');
-  }
-  e.preventDefault();
-}
 ```
 
 Add to `_nav.scss`:
 
 ```css
-.show #main ul {
-  display: block !important;
+.showmenu nav ul {
+  display: block;
 }
-```
-
-
-Adjust the display of the list items moving most of the existing CSS into the media query.
-
-```css
-  li {
-    padding: 0.5rem;
-    align-items: center; 
-    @media screen and (min-width: $break-two) {
-      display: flex;
-      flex: 1;
-      justify-content: center;
-      text-align: center;
-    }
-  }
-```
-
-Remove display: flex from the default state of nav and at it to the wide screen only:
-
-```css
-nav {
-  ...
-  // display: flex;
-  @media screen and (min-width: $break-two){
-    display: flex;
-  }
 ```
 
 Hide the hamburger icon after it has been clicked on:
 
 ```js
-window.onhashchange = function() {
+window.onhashchange = function () {
   let newloc = window.location.hash;
   let newContent = navItems.filter(navItem => navItem.link == newloc);
   siteWrap.innerHTML = `
@@ -280,7 +256,7 @@ window.onhashchange = function() {
   <h2>${newContent[0].header}</h2>
   <p>${newContent[0].content}</p>
   `;
-  document.body.classList.remove('show');
+  showMenu();
 }
 ```
 
@@ -560,7 +536,7 @@ app.get('/', (req, res) => {
 })
 ```
 
-__dirname is a global variable for the directory that contains the app.js. 
+`__dirname` is a global variable for the directory that contains the app.js. 
 
 Create index.html in the top level:
 
