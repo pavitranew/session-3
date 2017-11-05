@@ -263,30 +263,23 @@ Install the dependencies babel-cli and babel-preset-es2015 and add presets to pa
 
 `$ npm install --save-dev babel-preset-es2015`
 
-Here is the documentation for [babel-cli](https://babeljs.io/docs/usage/cli/)
+Note the documentation for [babel-cli](https://babeljs.io/docs/usage/cli/)
 
 Add a babel script (note the output path references a min folder we need to create) and babel presets to package.json:
 
 ```js
 {
-  "name": "basic-dom-dd2",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+
   "scripts": {
-    "watch-node-sass": "node-sass --watch scss/styles.scss --output app/css/  --source-map true",
-    "start": "browser-sync start --browser \"google chrome\" --server 'app' --files 'app'",
+
     "babel": "babel app/js/main.js --watch --source-maps --out-file app/js/min/main-compiled.js",
-    "boom!": "concurrently \"npm run start\" \"npm run watch-node-sass\" "
+
   },
-  "author": "",
-  "license": "ISC",
+
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-preset-es2015": "^6.22.0",
-    "browser-sync": "^2.18.6",
-    "concurrently": "^3.1.0",
-    "node-sass": "^4.4.0"
+
   },
   "babel": {
     "presets": [
@@ -341,11 +334,11 @@ server.listen(port, hostname, () => {
 
 ##Express
 
-The server we are using (browser sync) won't cut it when it comes to all the features needed to develop a website with all the http services we need.
+The server we are using (browser sync) won't cut it when it comes to all the features needed to develop a website with all the http services we will need.
 
-Express is a framework for building web applications on top of Node.js. It simplifies the server creation process that is already available in Node and allows you to use JavaScript as your server-side language.
+Express is a framework for building web applications on Node.js. It simplifies the server creation process that is already available in Node and allows you to use JavaScript as your server-side language.
 
-Aside: Here is the [generator](https://expressjs.com/en/starter/generator.html). Note the directory structure and the use of [Jade](http://learnjade.com) as a template tool. Here's a [Jade converter](http://www.html2jade.org). Note: Jade has been renamed to Pug due to a software trademark claim.
+Aside: Here is the [generator](https://expressjs.com/en/starter/generator.html). Note the directory structure and the use of [Pug](https://pugjs.org/api/getting-started.html) as a template tool. Here's a [Pug converter](http://www.html2jade.org). Note: Jade was renamed to Pug due to a software trademark claim.
 
 Let's look at the canonical "Hello world" [example](https://expressjs.com/en/starter/hello-world.html).
 
@@ -379,7 +372,7 @@ Run with `$ node app.js`
 
 Note the routing above. Change the second route to include a variable:
 
-```
+```js
 app.get('/entry/:name?', function(req, res){
   let name = req.params.name
   res.send(`
@@ -393,7 +386,7 @@ Test in the browser after restart: `http://localhost:9000/entry/watchlist`.
 
 Multiple parameters are common:
 
-```
+```js
 app.get('/entry/:name?/:link?', function(req, res){
   let name = req.params.name
   let hashlink = `#${req.params.link}`
@@ -407,7 +400,7 @@ app.get('/entry/:name?/:link?', function(req, res){
 
 Test in the browser after restart: `http://localhost:9000/entry/watchlist/test`.
 
-##Nodemon
+## Nodemon
 
 We need to restart the server whenever we make a change to app.js. Let’s streamline it by using nodemon.
 
@@ -419,7 +412,7 @@ To use nodemon we simply call it (instead of node) in the terminal with the name
 
 We no longer need to restart our server after making changes. Nodemon will watch for changes and take care of that for us.
 
-##Test Nodemon
+## Test Nodemon
 
 Add this after the last route:
 
@@ -439,23 +432,23 @@ DEMO: We will eventually be using [static](https://expressjs.com/en/starter/stat
 
 Add to app.js (above the app.get... line):
 
-```
-app.use(express.static('public'))
+```js
+app.use(express.static('app'))
 ```
 
 Note again that we have to stop and start the server whenever we change app.js.
 
-Comment out `app.use(express.static('public'))` - we'll make use of this later.
+Comment out `app.use(express.static('app'))` - we'll make use of this later.
 
 ===
 
-##CRUD
+## CRUD
 
 CRUD is an acronym for Create, Read, Update and Delete. It is a set of operations we get servers to execute (using the http verbs POST, GET, PUT and DELETE respectively). This is what each operation does:
 
 * Create (POST) - Make something
-* Read (GET)_- Get something
-* Update (PUT) - Change something
+* Read (GET) - Retrieve something
+* Update (PUT) - Alter an existing item
 * Delete (DELETE)- Remove something
 
 As we have seen, in Express, we handle a GET request with the get method: 
@@ -470,7 +463,7 @@ Let’s use the res object to serve an index.html page back to the browser.
 
 sendFile is a method that’s provided by the res object:
 
-```
+```js
 app.get('/', (req, res) => {
   // console.log(__dirname)
   res.sendFile(__dirname + '/index.html')
@@ -496,12 +489,12 @@ Create index.html in the top level:
 
 You should be able to see the HTML file now.
 
-##CRUD - CREATE
+## CRUD - CREATE
 The CREATE operation is performed only by the browser if a POST request is sent to the server. This POST request can triggered either with JavaScript or through a <form> element.
 
 Add the following to index.html
 
-```
+```html
 <form action="/entries" method="POST">
   <input type="text" placeholder="label" name="label">
   <input type="text" placeholder="header" name="header">
@@ -557,13 +550,13 @@ The urlencoded method within body-parser tells body-parser to extract data from 
 
 Now, when you test your form, you should be able to see everything in the form field within the req.body object. Try doing a console.log:
 
-```
+```js
 app.post('/entries', (req, res) => {
   console.log(req.body)
 })
 ```
 
-##MongoDB
+## MongoDB
 
 We first have to install MongoDB through npm if we want to use it as our database.
 
@@ -626,7 +619,7 @@ app.post('/entries', (req, res) => {
 
 Now enter something into the <form> element and you’ll be able to see an entry in your MongoDB collection.
 
-####Showing entries to users
+#### Showing entries to users
 
 We have to do two things to show the entries stored in MongoLab to our users.
 
@@ -684,7 +677,7 @@ touch views/index.ejs
 
 Now, copy the contents of index.html into index.ejs and add.
 
-```
+```html
 <div>
   <% for(var i=0; i<entries.length; i++) { %>
     <h2><%= entries[i].label %></h2>
@@ -699,7 +692,7 @@ Here, you can see that we’re basically looping through the entries array and c
 
 The complete index.ejs file so far should be:
 
-```
+```html
   <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -749,13 +742,13 @@ app.get('/', (req, res) => {
 
 Now, refresh your browser and you should be able to see all entries.
 
-##Integration with the old site
+## Integration with the old site
 
 We need to move the old index.html into index.ejs and re-enable app.use static. 
 
 We can edit our package.json to proxy the browser sync to our express port number and add nodemon to our list of currently running scripts.
 
-```
+```js
  "scripts": {
     "watch-node-sass": "node-sass --watch scss/styles.scss --output public/css/  --source-map true",
     "start": "browser-sync start --proxy 'localhost:9000' --browser \"google chrome\"  --files 'public'",
@@ -765,21 +758,16 @@ We can edit our package.json to proxy the browser sync to our express port numbe
 
 You will have to comment out the onload function in order to see index.ejs:
 
-```
+```js
 // window.onload = function () {
 //   window.location.hash = '#watchlist' 
 // }
 ```
 
 
-###Notes
+### Notes
 
-Some interesting applications of SVG:
-
-* http://responsivelogos.co.uk
-* http://www.svgeneration.com/recipes/Beam-Center/
-
-##Server Accounts
+## Server Accounts
 
 Username is the first seven letters of your last name + first letter of first name
 
