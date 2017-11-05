@@ -22,7 +22,6 @@ a {
   margin: 40px auto;
   background: white;
   padding: 40px;
-  text-align: justify;
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.05);
   transform: scale(0.98);
   transition: transform 0.5s; }
@@ -75,23 +74,22 @@ nav a {
   max-width: 500px; }
 
 header {
-  text-align: center;
   height: 20vh;
   background: url(../img/img.jpg) center no-repeat;
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center; }
-  header div {
-    background: rgba(255, 255, 255, 0.5); }
   @media screen and (min-width: 46.25em) {
     header {
-      height: 40vh;
-      background-attachment: fixed; } }
+      height: 40vh; } }
   header h1 {
     color: white;
-    font-size: 7vw;
+    font-size: 10vw;
     font-weight: 300;
     text-shadow: 3px 4px 0 rgba(0, 0, 0, 0.2); }
+    @media screen and (min-width: 46.25em) {
+      header h1 {
+        font-size: 7vw; } }
 
 /*# sourceMappingURL=styles.css.map */
