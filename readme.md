@@ -731,9 +731,13 @@ Refresh the page and see an array of entries in the terminal.
 
 Let's generate HTML that displays all our entries.
 
+## Template Engines
+
+http://expressjs.com/en/guide/using-template-engines.html
+
 We can’t serve our index.html file and expect entries to magically appear because there’s no way to add dynamic content to a plain HTML file. What we can do instead, is to use template engines to help us out. Some popular template engines include jade/pug, Embedded JavaScript and Nunjucks.
 
-For this tutorial, we’re going to use Embedded JavaScript (ejs) as our template engine because it’s the easiest to start with.
+For today, we’re going to use Embedded JavaScript (ejs) as our template engine because it’s easy to start with.
 
 We can use EJS by first installing it, then setting the view engine in Express to ejs.
 
@@ -754,7 +758,7 @@ Now, copy the contents of index.html into index.ejs and add.
 
 ```html
 <div>
-  <% for(var i=0; i<entries.length; i++) { %>
+  <% for(let i=0; i<entries.length; i++) { %>
     <h2><%= entries[i].label %></h2>
     <p><%= entries[i].content %></p>
   <% } %>
