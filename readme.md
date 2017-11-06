@@ -503,7 +503,7 @@ Add the following to index.html
 </form>
 ```
 
-```
+```html
 <style>
   input, textarea {
     display: block;
@@ -524,7 +524,7 @@ The method attribute tells the browser what to request to send. In this case, it
 
 On our server, we can handle this POST request with a post method that Express provides. It takes the same arguments as the GET method:
 
-```
+```js
 app.post('/entries', (req, res) => {
   console.log('Hello')
 })
@@ -538,7 +538,7 @@ Express doesn’t handle reading data from the <form> element on it’s own. We 
 
 Make the following changes to app.js:
 
-```
+```js
 const express = require('express')
 const bodyParser= require('body-parser')
 const app = express()
