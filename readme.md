@@ -304,9 +304,9 @@ Change the link to the main.js in index.html to point to the new file.
 
 
 
-#NODE and Express JS
+# NODE and Express JS
 
-##NODE
+## NODE
 
 A simple node.js [server](https://nodejs.org/en/about/). 
 
@@ -332,7 +332,7 @@ server.listen(port, hostname, () => {
 ```
 
 
-##Express
+## Express
 
 The server we are using (browser sync) won't cut it when it comes to all the features needed to develop a website with all the http services we will need.
 
