@@ -1,4 +1,4 @@
-#Session 3
+# Session 3
 
 Today we continue to work with NPM, responsive design and start looking at Expressjs - exploring some of its capabilities.
 
