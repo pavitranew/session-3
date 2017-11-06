@@ -8,11 +8,25 @@ Today we continue to work with NPM, responsive design and start looking at Expre
 * do the Git / Github tutorial at [the Git Website](https://try.github.io/levels/1/challenges/1)
 * upload a finished version to github (remember to use a .gitignore file)
 
+## Reading 
+
+https://en.wikipedia.org/wiki/Node.js#History
+
+https://expressjs.com/en/starter/installing.html
+
 ## NPM Review
 
-https://github.com/sass/node-sass#command-line-interface
 
-https://www.browsersync.io/docs/command-line
+Node-sass: https://github.com/sass/node-sass#command-line-interface
+Browser-sync: https://www.browsersync.io/docs/command-line
+Concurrently: https://www.npmjs.com/package/concurrently
+
+* cd into session-3, install the dev-dependencies and run the script:
+
+```bash
+npm install
+npm run boom!
+```
 
 ## GIT and GITHUB
 
@@ -25,13 +39,13 @@ There is a handy and very simple tutorial for Git on [the Git Website](https://t
 1. make sure terminal is in the correct directory using `cd` (drag-and-drop, copy paste)
 1. initialize the repo:
 
-```
+```bash
 git init
 ```
 
 Configuring Git for the first time - only if you haven't done this before:
 
-```
+```bash
 git config
 git config --global user.name " ***** "
 git config --global user.email " ***** "
@@ -40,21 +54,21 @@ git config --list
 
 * Add (watch) all your files:
 
-```
+```bash
 git add .
 ```
 
 Once you have made changes you need to commit them
 
-```
+```bash
 git commit -m 'initial commit'
 ```
 
 Note: `git commit`  without the `-m` flag goes into VI - a text popular UNIX text editor. To avoid this always using the -m flag when committing. (If you end up in VI, hit ESC and type “:q” to exit.)
 
-Git Status
+* Git Status
 
-```
+```bash
 git status
 On branch master
 nothing to commit, working directory clean
@@ -62,40 +76,48 @@ nothing to commit, working directory clean
 
 * Create a new branch:
 
-```
+```bash
 git branch <new branchname>
 git checkout <new branchname>
 git branch
 ```
 
-To merge branches:
+* merge branches:
 
 * make sure the branch you want to merge is clear (`$ git status`)
 * checkout the branch you want to merge into
 * run status on that branch too (make sure it is clear)
 
-```
+```bash
 git checkout master
 git status
 git merge <new branchname>
 ```
 
-Delete branches:
+* delete branches:
 
-```
+```bash
 git branch -d <branchname>
 ```
 
-Pushing Files to Remote Repos - Github
+or (to delete an unmerged branch)
 
-Note: always create a .gitignore file to prevent local working/utility files from being pushed.
+```bash
+git branch -D <branchname>
+```
+
+Note: be sure to delete while *not* on the targeted branch
+
+* pushing files to remote repos - Github
+
+Note: always create a .gitignore file to prevent local working/utility files from being pushed e.g.:
 
 ```
 .DS_store
 node_modules
 ```
 
-* Log into Github, create and new repo and follow the instructions e.g.
+* Log into Github, create and new repo and follow the instructions e.g.:
 
 ```
 git remote add origin https://github.com/<nameofgithubrepo>
@@ -103,8 +125,6 @@ git push -u origin master
 ```
 
 Finally - when downloading a github repo use the `clone` method to move it to your local disk while retaining the git history and branches.
-
-Use of VS Code as a Git / diff client?
 
 
 ## Responsive Navigation continued
@@ -114,35 +134,43 @@ Move all nav related css into a new partial `_nav.scss` and import:
 `@import "imports/nav";`
 
 
-Nest the CSS rules for the nav:
+Nest and refactor the CSS rules for the nav:
 
 ```css
 nav {
   display: flex;
   background: $link;
+  top: 0;
+  width: 100%;
+  transition: all 0.5s;
+  position: relative;
+  z-index: 1; 
   .fixed-nav & {
     position: fixed;
-    top: 0;
     box-shadow: 0 5px 3px rgba(0, 0, 0, 0.1); 
   }
+
   ul {
     margin: 0;
     padding: 0;
     list-style: none;
     display: flex;
-    min-height: 2.25rem; 
+    flex:1;
+    min-height: 2.25rem;
   }
+
   li {
     flex: 1;
     text-align: center;
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
   }
+
   a {
     text-decoration: none;
     display: inline-block;
-    color: white; 
+    color: white;
   }
 }
 
@@ -206,7 +234,7 @@ Hide the nav-links initially on small screens while maintaining the flex display
   }
 ```
 
-Refactor to simplify list items:
+Refactor to stack the list items and simplify:
 
 ```css
   li {
@@ -229,12 +257,23 @@ function showMenu(){
 }
 ```
 
-Add to `_nav.scss`:
+Add to `_nav.scss` using ampersand:
 
 ```css
-.showmenu nav ul {
-  display: block;
-}
+    ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    flex:1;
+    min-height: 2.25rem;
+    display: none;
+    .showmenu & {
+      display: block;
+    }
+    @media (min-width: $break-two){
+      display: flex;
+    }
+  }
 ```
 
 Hide the hamburger icon after a link has been clicked:
@@ -248,7 +287,9 @@ window.onhashchange = function () {
   <h2>${newContent[0].header}</h2>
   <p>${newContent[0].content}</p>
   `;
-  showMenu();
+  if (window.innerWidth <= 740){
+    showMenu();
+  }
 }
 ```
 
@@ -263,7 +304,7 @@ Install the dependencies babel-cli and babel-preset-es2015 and add presets to pa
 
 `$ npm install --save-dev babel-preset-es2015`
 
-Note the documentation for [babel-cli](https://babeljs.io/docs/usage/cli/)
+Note the documentation for [babel-cli](https://babeljs.io/docs/usage/cli/) and the message `🙌  Thanks for using Babel: we recommend using babel-preset-env now: please read babeljs.io/env to update!`
 
 Add a babel script (note the output path references a min folder we need to create) and babel presets to package.json:
 
@@ -272,7 +313,7 @@ Add a babel script (note the output path references a min folder we need to crea
 
   "scripts": {
 
-    "babel": "babel app/js/main.js --watch --source-maps --out-file app/js/min/main-compiled.js",
+    "babel": "babel app/js/main.js --watch --source-maps --out-file app/js/main-compiled.js",
 
   },
 
@@ -290,17 +331,19 @@ Add a babel script (note the output path references a min folder we need to crea
 
 ```
 
-Create the `min` folder in app/js.
-
-Add babel to our concurrent commands:
+Mac: add babel to our concurrent commands:
 
 ```bash
 "boom!": "concurrently \"npm run start\" \"npm run watch-node-sass\"  \"npm run babel\" "
 ```
 
-Change the link to the main.js in index.html to point to the new file.
+and run `npm run boom!`
 
-`<script src="js/min/main-compiled.js"></script>`
+Note: PC / Mac users using VS Code for SASS transpiling and browser refresh need only run `npm run babel`
+
+Don't forget to change the link to the main.js in index.html to point to the new file.
+
+`<script src="js/main-compiled.js"></script>`
 
 
 
@@ -312,7 +355,7 @@ A simple node.js [server](https://nodejs.org/en/about/).
 
 Note the use of const, template strings, arrow functions and the request and response variables.
 
-DEMO: Save this as script.js in the basic-dom folder and run it using `node script.js`
+DEMO: Save this as app.js in the project folder and run it using `node script.js`
 
 ```js
 const http = require('http');
@@ -331,6 +374,8 @@ server.listen(port, hostname, () => {
 });
 ```
 
+Note: we are running a node app using the `node` command in the terminal.
+
 
 ## Express
 
@@ -344,7 +389,7 @@ Let's look at the canonical "Hello world" [example](https://expressjs.com/en/sta
 
 Install express using npm `$ npm install --save express`
 
-Create `app.js` in the root folder of our project.
+Edit `app.js` in the root folder of our project.
 
 ```js
 const express = require('express') 
@@ -370,7 +415,15 @@ app.listen(port, function () {
 
 Run with `$ node app.js`
 
-Note the routing above. Change the second route to include a variable:
+Note and test the routing above. 
+
+Note that console.log is now using the terminal, *not* the browser's.
+
+Note the [get](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) verb used in our [basic express route](https://expressjs.com/en/starter/basic-routing.html).
+
+Common web-development tasks are not directly supported by Node. If you want to add specific handling for different HTTP verbs (e.g. GET, POST, DELETE, etc.), separately handle requests at different URL paths ("routes"), serve static files, or use templates to dynamically create the response, then you will need to write the code yourself, or use ExpressJS.
+
+Add a second route that includes a variable:
 
 ```js
 app.get('/entry/:name?', function(req, res){
@@ -382,9 +435,9 @@ app.get('/entry/:name?', function(req, res){
 })
 ```
 
-Test in the browser after restart: `http://localhost:9000/entry/watchlist`.
+Test in the browser after restarting the node process.: `http://localhost:9000/entry/watchlist`.
 
-Multiple parameters are common:
+Multiple parameters:
 
 ```js
 app.get('/entry/:name?/:link?', function(req, res){
@@ -398,7 +451,7 @@ app.get('/entry/:name?/:link?', function(req, res){
 })
 ```
 
-Test in the browser after restart: `http://localhost:9000/entry/watchlist/test`.
+Test in the browser after restarting the node app: `http://localhost:9000/entry/watchlist/test`.
 
 ## Nodemon
 
@@ -426,9 +479,11 @@ app.get('*', function(req, res){
 
 Upon save nodemon should restart the server.
 
-===
+## Express Middleware
 
-DEMO: We will eventually be using [static](https://expressjs.com/en/starter/static-files.html) files in our exercise.
+[Middleware](http://expressjs.com/en/resources/middleware.html) is used extensively in Express apps in order to simplify common web development tasks like working with cookies, sessions, user authentication, accessing request POST and JSON data, logging, etc.
+
+DEMO: We will eventually be using [static](https://expressjs.com/en/starter/static-files.html) middleware (the only middleware *built in* to Express) to serve files in our exercise.
 
 Add to app.js (above the app.get... line):
 
@@ -440,24 +495,23 @@ Note again that we have to stop and start the server whenever we change app.js.
 
 Comment out `app.use(express.static('app'))` - we'll make use of this later.
 
-===
 
 ## CRUD
 
-CRUD is an acronym for Create, Read, Update and Delete. It is a set of operations we get servers to execute (using the http verbs POST, GET, PUT and DELETE respectively). This is what each operation does:
+CRUD is an acronym for Create, Read, Update and Delete. It is a set of operations we get servers to execute (using the http verbs POST, GET, PUT and DELETE respectively). This is what [each operation does](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods):
 
-* Create (POST) - Make something
-* Read (GET) - Retrieve something
-* Update (PUT) - Alter an existing item
-* Delete (DELETE)- Remove something
+* Read (GET) - Retrieve something, requests a representation of the specified resource
+* Create (POST) - Make something, a message for a bulletin board, newsgroup, mailing list, or comment thread; a block of data that is the result of submitting a web form to a data-handling process
+* Update (PUT) - Alter an existing item, if the URL refers to an already existing resource, it is modified; if not, then the server can create the resource with that URL
+* Delete (DELETE)- deletes the specified resource.
 
 As we have seen, in Express, we handle a GET request with the get method: 
 
 `app.get('/', (req, res) => res.send('Hello World!'))`
 
-The first argument,  /, is the path of the GET request (anything that comes after your domain name). For localhost:3000, the browser is actually looking for localhost:3000/. The path argument in this case is /.
+The first argument, `/,` is the path of the GET request (anything that comes after your domain name). For localhost:3000, the browser is actually looking for localhost:3000/. The path argument in this case is /.
 
-The second argument is a callback function that tells the server what to do when the path is matched. It takes in two arguments, a request object and a response object (req, res).
+The second argument `(req, res) => res.send('Hello World!')` is a callback function that tells the server what to do when the path is matched. It takes in two arguments, a request object and a response object (req, res).
 
 Let’s use the res object to serve an index.html page back to the browser. 
 
@@ -487,7 +541,7 @@ Create index.html in the top level:
 </html>
 ```
 
-You should be able to see the HTML file now.
+You should be able to see the HTML file in the browser at the specified port number.
 
 ## CRUD - CREATE
 The CREATE operation is performed only by the browser if a POST request is sent to the server. This POST request can triggered either with JavaScript or through a <form> element.
@@ -532,7 +586,7 @@ app.post('/entries', (req, res) => {
 
 Refresh your browser then enter something into your form element. You should  see 'Hello' in your command line.
 
-Express doesn’t handle reading data from the <form> element on it’s own. We have to add another package called body-parser to gain this functionality.
+Express doesn’t handle reading data from the <form> element on it’s own. We have to add a middleware package called body-parser to gain this functionality.
 
 `$ npm install body-parser --save`
 
@@ -556,21 +610,42 @@ app.post('/entries', (req, res) => {
 })
 ```
 
+The object `{ label: '1', header: '2', content: '3' }` is packaged by the body parser and sent to the server as part of the request body.
+
 ## MongoDB
 
-We first have to install MongoDB through npm if we want to use it as our database.
+Express apps can use any database mechanism supported by Node including PostgreSQL, MySQL, Redis, SQLite, MongoDB, etc.
+
+We first have to install the driver for the popular NoSQL MongoDB through npm if we want to use it as our database.
 
 `$ npm install mongodb --save`
 
-Once installed, we can connect to MongoDB through the Mongo.Client‘s connect method as shown in the code below:
+Once installed, we can connect to MongoDB through the Mongo.Client‘s connect method as shown in the sample code below:
 
+```js
+var MongoClient = require('mongodb').MongoClient;
+
+MongoClient.connect('mongodb://localhost:27017/animals', function(err, db) {
+  if (err) throw err;
+
+  db.collection('mammals').find().toArray(function (err, result) {
+    if (err) throw err;
+
+    console.log(result);
+  });
+});
 ```
+
+Let's start with:
+
+```js
 const MongoClient = require('mongodb').MongoClient
 
 MongoClient.connect('link-to-mongodb', (err, database) => {
   // ... start the server
 })
 ```
+
 
 The next part is to get the correct link to our database. For our first attempt we'll use a cloud service - [MongoLab](https://mlab.com).
 
@@ -628,7 +703,7 @@ We have to do two things to show the entries stored in MongoLab to our users.
 
 We can get the entries from MongoLab by using the find method that’s available in the collection method.
 
-```
+```js
 app.get('/', (req, res) => {
   var cursor = db.collection('entries').find()
   console.log(cursor)
@@ -636,7 +711,7 @@ app.get('/', (req, res) => {
 })
 ```
 
-The find method returns a cursor (A Mongo Object) that probably doesn’t make sense when you console.log it out.
+The find method returns a cursor (A Mongo Object) that probably doesn’t make much sense when you console.log it out.
 
 Yet this cursor object contains all entries from our database. It also contains a bunch of other properties and methods that allow us to work with data easily. One such method is the toArray method.
 
@@ -652,11 +727,11 @@ app.get('/', (req, res) => {
 })
 ```
 
-You now see an array of entries in the terminal. 
+Refresh the page and see an array of entries in the terminal. 
 
-Next part we generate HTML that contains all our entries.
+Let's generate HTML that displays all our entries.
 
-We can’t serve our index.html file and expect entries to magically appear because there’s no way to add dynamic content to a plain HTML file. What we can do instead, is to use template engines to help us out. Some popular template engines include Jade/pug, Embedded JavaScript and Nunjucks.
+We can’t serve our index.html file and expect entries to magically appear because there’s no way to add dynamic content to a plain HTML file. What we can do instead, is to use template engines to help us out. Some popular template engines include jade/pug, Embedded JavaScript and Nunjucks.
 
 For this tutorial, we’re going to use Embedded JavaScript (ejs) as our template engine because it’s the easiest to start with.
 
@@ -670,7 +745,7 @@ and in app.js:
 
 Let’s first create an index.ejs file within a views folder so we can start populating data.
 
-```
+```bash
 mkdir views
 touch views/index.ejs
 ```
@@ -693,38 +768,38 @@ Here, you can see that we’re basically looping through the entries array and c
 The complete index.ejs file so far should be:
 
 ```html
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>MY APP</title>
-    <style>
-      input, textarea {
-        display: block;
-        margin: 1rem;
-        width: 70%;
-      }
-    </style>
-  </head>
-  <body>
-    <p>Testing 1 2 3</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MY APP</title>
+  <style>
+    input, textarea {
+      display: block;
+      margin: 1rem;
+      width: 70%;
+    }
+  </style>
+</head>
+<body>
+  <p>Testing 1 2 3</p>
 
-    <form action="/entries" method="POST">
-      <input type="text" placeholder="label" name="label">
-      <input type="text" placeholder="header" name="header">
-      <textarea type="text" placeholder="content" name="content"></textarea>
-      <button type="submit">Submit</button>
-    </form>
+  <form action="/entries" method="POST">
+    <input type="text" placeholder="label" name="label">
+    <input type="text" placeholder="header" name="header">
+    <textarea type="text" placeholder="content" name="content"></textarea>
+    <button type="submit">Submit</button>
+  </form>
 
-    <div>
-      <% for(var i=0; i<entries.length; i++) { %>
-      <h2><%= entries[i].label %></h2>
-      <p><%= entries[i].content %></p>
-      <% } %>
-    </div>
+  <div>
+    <% for(var i=0; i<entries.length; i++) { %>
+    <h2><%= entries[i].label %></h2>
+    <p><%= entries[i].content %></p>
+    <% } %>
+  </div>
 
-  </body>
-  </html>
+</body>
+</html>
 ```
 
 Finally, we have to render this index.ejs file when handling the GET request. Here, we’re setting the results (an array) as the entries array we used in index.ejs above.
@@ -750,8 +825,9 @@ We can edit our package.json to proxy the browser sync to our express port numbe
 
 ```js
  "scripts": {
-    "watch-node-sass": "node-sass --watch scss/styles.scss --output public/css/  --source-map true",
-    "start": "browser-sync start --proxy 'localhost:9000' --browser \"google chrome\"  --files 'public'",
+    "watch-node-sass": "node-sass --watch scss/styles.scss --output app/css/  --source-map true",
+    "start": "browser-sync start --proxy 'localhost:9000' --browser \"google chrome\"  --files 'app'",
+    "babel": "babel app/js/main.js --watch --source-maps --out-file app/js/main-compiled.js",
     "boom!": "concurrently \"nodemon app.js\" \"npm run start\" \"npm run watch-node-sass\" "
   },
 ```
