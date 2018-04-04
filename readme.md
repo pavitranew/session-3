@@ -110,19 +110,56 @@ Note: be sure to delete while _not_ on the targeted branch
 
 Note: always create a .gitignore file to prevent local working/utility files from being pushed e.g.:
 
-```
+```js
 .DS_store
 node_modules
 ```
 
 * Log into Github, create and new repo and follow the instructions e.g.:
 
-```
+```sh
 git remote add origin https://github.com/<nameofgithubrepo>
 git push -u origin master
 ```
 
 Finally - when downloading a github repo use the `clone` method to move it to your local disk while retaining the git history and branches.
+
+## Hashes Solved
+
+```js
+// hashes
+const siteWrap = document.querySelector('.site-wrap');
+
+window.onload = function(){
+  let newContent;
+  if(!window.location.hash){
+    newContent = navItems.filter(
+      navItem => navItem.link == '#watchlist'
+    )
+  } else {
+    newContent = navItems.filter(
+      navItem => navItem.link == window.location.hash
+    )
+  }
+  renderPage(newContent)
+}
+
+
+window.onhashchange = function() {
+  let newloc = window.location.hash;
+  let newContent = navItems.filter(
+    navItem => navItem.link == newloc
+  )
+  renderPage(newContent)
+}
+
+function renderPage(newContent){
+  siteWrap.innerHTML = `
+  <h2>${newContent[0].header}</h2>
+  ${newContent[0].content}
+  `
+}
+```
 
 ## Responsive Navigation continued
 
