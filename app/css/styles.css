@@ -31,32 +31,6 @@ p {
   margin: 1rem 0;
 }
 
-nav {
-  background: #007eb6;
-  width: 100%;
-  transition: all 0.5s;
-  z-index: 1;
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 2.5rem;
-}
-
-nav li {
-  flex: 1;
-  text-align: center;
-}
-
-nav a {
-  text-decoration: none;
-  display: inline-block;
-  color: white;
-}
-
 img {
   width: 100%;
 }
@@ -115,5 +89,31 @@ header h1 {
   font-size: 7vw;
   font-weight: 400;
   text-shadow: 3px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+nav {
+  background: #007eb6;
+  width: 100%;
+  transition: all 0.5s;
+  z-index: 1;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.5rem;
+}
+
+nav li {
+  flex: 1;
+  text-align: center;
+}
+
+nav a {
+  text-decoration: none;
+  display: inline-block;
+  color: white;
 }
 /*# sourceMappingURL=styles.css.map */
