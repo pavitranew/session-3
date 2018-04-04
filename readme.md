@@ -19,7 +19,7 @@ Today we continue to work with NPM, responsive design and start looking at Expre
 * Browser-sync [CLI]() https://www.browsersync.io/docs/command-line)
 * [Concurrently](https://www.npmjs.com/package/concurrently)
 
-* cd into the session directory, install the dev-dependencies and run the script:
+* cd into the session directory install the dev-dependencies and run the script:
 
 ```bash
 npm install
