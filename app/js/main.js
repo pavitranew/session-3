@@ -14,8 +14,6 @@ let topOfNav = nav.offsetTop;
 window.addEventListener('scroll', fixNav)
 
 function fixNav() {
-  // console.log(topOfNav);
-  // console.log(window.scrollY);
   if (window.scrollY >= topOfNav) {
     document.body.style.paddingTop = nav.offsetHeight + 'px';
     document.body.classList.add('fixed-nav')
@@ -42,7 +40,6 @@ window.onload = function(){
   }
   renderPage(newContent)
 }
-
 
 window.onhashchange = function() {
   let newloc = window.location.hash;
