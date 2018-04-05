@@ -4,14 +4,9 @@ Today we continue to work with NPM, responsive design and start looking at Expre
 
 ## Homework
 
-* watch Traversy's [Crash Course on Express](https://youtu.be/gnsO8-xJ8rs). You _must_ follow along.
-* download this repo and review the steps below. Get the communication between the form and your own account on mLab working.
-* do the Git / Github tutorial at [the Git Website](https://try.github.io/levels/1/challenges/1)
-
-## Reading
-
-* an [overview of node js](https://en.wikipedia.org/wiki/Node.js#History)
-* get up and running with [express](https://expressjs.com/en/starter/installing.html)
+* watch Traversy's [Crash Course on Express](https://youtu.be/gnsO8-xJ8rs) and follow along in your editor
+* download the `spr2018-done` branch of this repo, review the steps below, and get the communication between the form and your own account on mLab working
+* Optional - do the Git / Github tutorial at [the Git Website](https://try.github.io/levels/1/challenges/1)
 
 ## GIT and GITHUB
 
