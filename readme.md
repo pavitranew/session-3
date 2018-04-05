@@ -30,13 +30,13 @@ There is a handy and very simple tutorial for Git on [the Git Website](https://t
 1. make sure terminal is in the correct directory using `cd` (drag-and-drop, copy paste)
 1. initialize the repo:
 
-```bash
+```sh
 git init
 ```
 
 Configuring Git for the first time - only if you haven't done this before:
 
-```bash
+```sh
 git config
 git config --global user.name " ***** "
 git config --global user.email " ***** "
@@ -45,13 +45,13 @@ git config --list
 
 * Add (watch) all your files:
 
-```bash
+```sh
 git add .
 ```
 
 Once you have made changes you need to commit them
 
-```bash
+```sh
 git commit -m 'initial commit'
 ```
 
@@ -59,7 +59,7 @@ Note: `git commit` without the `-m` flag goes into VI - a text popular UNIX text
 
 * Git Status
 
-```bash
+```sh
 git status
 On branch master
 nothing to commit, working directory clean
@@ -67,7 +67,7 @@ nothing to commit, working directory clean
 
 * Create a new branch:
 
-```bash
+```sh
 git branch <new branchname>
 git checkout <new branchname>
 git branch
@@ -79,7 +79,7 @@ git branch
 * checkout the branch you want to merge into
 * run status on that branch too (make sure it is clear)
 
-```bash
+```sh
 git checkout master
 git status
 git merge <new branchname>
@@ -87,13 +87,13 @@ git merge <new branchname>
 
 * delete branches:
 
-```bash
+```sh
 git branch -d <branchname>
 ```
 
 or (to delete an unmerged branch)
 
-```bash
+```sh
 git branch -D <branchname>
 ```
 
@@ -171,7 +171,9 @@ Don't forget to change the link to the main.js in index.html to point to the new
 
 and run `npm run boom!`.
 
-Or, for users using VS Code for SASS transpiling and browser refresh:  `npm run babel`
+Remember, you can pick and choose commands or create new batches using concurrently. For users using VS Code for SASS transpiling and browser refresh:  `npm run babel` or 
+
+`"boomy!": "concurrently \"npm run start\" \"npm run babel\" "`
 
 ## Hashes - Solved
 
@@ -182,7 +184,6 @@ const siteWrap = document.querySelector('.site-wrap');
 window.onload = function(){
   let newContent;
   if(!window.location.hash){
-    console.log('bye')
     newContent = navItems.filter(
       navItem => navItem.link == '#watchlist'
     )
@@ -246,37 +247,27 @@ nav {
     }
 }
 
-li.logo {
+.logo {
     max-width: 0;
     overflow: hidden;
     background: white;
-    transition: all 0.5s;
-    font-weight: 600;
-    font-size: 30px;
     img {
         padding-top: 0.25rem;
         width: 2.5rem;
     }
-    .fixed-nav & {
-        max-width: 500px;
-    }
 }
 ```
 
-Since we are using the logo as a hamburger a different strategy is needed.
+We are using the logo as a hamburger.
 
-Remove the hiding effect on the logo on small screens while maintaining it on large screens using a min-width (mobile first) media query..
+Display the logo on small screens while hiding it on large:
 
 ```css
 .logo {
     background: white;
+    display: block;
     @media(min-width: $break-two){
-        max-width: 0;
-        overflow: hidden;
-        transition: all 0.5s;
-        .fixed-nav & {
-            max-width: 500px;
-        }
+        display: none;
     }
     img {
         padding-top: 0.25rem;
@@ -291,18 +282,17 @@ Hide the nav-links initially on small screens while maintaining the flex display
 
 ```css
 ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  flex: 1;
-  min-height: 2.25rem;
-  display: none;
-  @media (min-width: $break-two) {
-    display: flex;
-  }
+    display: none;
+    height: 2.5rem;
+    list-style: none;
+    @media(min-width: $break-two){
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 ```
-
+<!-- 
 Refactor to stack the list items and simplify:
 
 ```css
@@ -312,7 +302,7 @@ li {
     flex: 1;
   }
 }
-```
+``` -->
 
 Make clicking on the logo show the menu on narrow screens:
 
@@ -326,26 +316,20 @@ function showMenu() {
 }
 ```
 
-Add to `_nav.scss` using ampersand:
+Use the class to make the nav visible:
 
 ```css
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  flex: 1;
-  min-height: 2.25rem;
-  display: none;
-  .showmenu & {
-    display: block;
-  }
-  @media (min-width: $break-two) {
+.showmenu #nav-links {
     display: flex;
-  }
+    flex-direction: column;
 }
 ```
 
-Hide the hamburger icon after a link has been clicked:
+Adjust the formatting of the list items:
+
+
+
+<!-- Hide the hamburger icon after a link has been clicked:
 
 ```js
 window.onhashchange = function() {
@@ -360,7 +344,7 @@ window.onhashchange = function() {
     showMenu();
   }
 };
-```
+``` -->
 
 Final `_nav.scss` partial:
 
@@ -412,7 +396,7 @@ nav {
     }
 }
 
-.menu-open #nav-links {
+.showmenu #nav-links {
     display: flex;
     flex-direction: column;
 }

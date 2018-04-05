@@ -109,4 +109,16 @@ nav a {
   padding-top: 0.25rem;
   width: 2.5rem;
 }
+
+body.fixed-nav nav {
+  position: fixed;
+  top: 0;
+  box-shadow: 0 5px 3px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  z-index: 1;
+}
+
+body.fixed-nav .site-wrap {
+  transform: scale(1);
+}
 /*# sourceMappingURL=styles.css.map */
