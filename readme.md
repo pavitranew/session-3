@@ -1,4 +1,4 @@
-# III Responsive Design, ExpressJS and an Introduction to GIT
+# III - Responsive Design, ExpressJS and an Introduction to GIT
 
 Today we continue to work with NPM, responsive design and start looking at Expressjs - exploring some of its capabilities.
 
