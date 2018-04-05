@@ -16,7 +16,7 @@ Today we continue to work with NPM, responsive design and start looking at Expre
 ## NPM Review
 
 * Node-sass [command line interface](https://github.com/sass/node-sass#command-line-interface)
-* Browser-sync [CLI]() https://www.browsersync.io/docs/command-line)
+* Browser-sync [CLI](https://www.browsersync.io/docs/command-line)
 * [Concurrently](https://www.npmjs.com/package/concurrently)
 
 * cd into the session directory install the dev-dependencies and run the script:
@@ -172,80 +172,69 @@ Nest and refactor the CSS rules for the nav:
 
 ```css
 nav {
-  display: flex;
-  background: $link;
-  top: 0;
-  width: 100%;
-  transition: all 0.5s;
-  position: relative;
-  z-index: 1;
-  .fixed-nav & {
-    position: fixed;
-    box-shadow: 0 5px 3px rgba(0, 0, 0, 0.1);
-  }
-
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex: 1;
-    min-height: 2.25rem;
-  }
-
-  li {
-    flex: 1;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  a {
-    text-decoration: none;
-    display: inline-block;
-    color: white;
-  }
+    background: #007eb6;
+    width: 100%;
+    transition: all 0.5s;
+    .fixed-nav & {
+        position: fixed;
+        top: 0;
+        box-shadow: 0 5px 3px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+    ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 2.5rem;
+    }
+    li {
+        flex: 1;
+        text-align: center;
+    }
+    a {
+        text-decoration: none;
+        display: inline-block;
+        color: white;
+    }
 }
 
-.logo {
-  max-width: 0;
-  overflow: hidden;
-  transition: all 0.5s;
-  img {
-    padding-top: 0.25rem;
-    width: 2rem;
-    margin-left: 0.5rem;
-  }
-  .fixed-nav & {
-    max-width: 500px;
-  }
+li.logo {
+    max-width: 0;
+    overflow: hidden;
+    background: white;
+    transition: all 0.5s;
+    font-weight: 600;
+    font-size: 30px;
+    img {
+        padding-top: 0.25rem;
+        width: 2.5rem;
+    }
+    .fixed-nav & {
+        max-width: 500px;
+    }
 }
 ```
 
 Since we are using the logo as a hamburger a different strategy is needed.
 
+Remove the hiding effect on the logo on small screens while maintaining it on large screens using a min-width (mobile first) media query..
+
 ```css
 .logo {
-  display: block;
-  @media (min-width: $break-two) {
-    display: none;
-  }
-  // max-width:0;
-  // overflow: hidden;
-  // transition: all 0.5s;
-}
-
-// .fixed-nav .logo {
-//   max-width:500px;
-// }
-```
-
-```css
-.logo img {
-  padding-top: 0.25rem;
-  width: 2rem;
-  margin-left: 0.5rem;
+    background: white;
+    @media(min-width: $break-two){
+        max-width: 0;
+        overflow: hidden;
+        transition: all 0.5s;
+        .fixed-nav & {
+            max-width: 500px;
+        }
+    }
+    img {
+        padding-top: 0.25rem;
+        width: 2.5rem;
+    }
 }
 ```
 
@@ -376,9 +365,9 @@ Don't forget to change the link to the main.js in index.html to point to the new
 
 `<script src="js/main-compiled.js"></script>`
 
-# NODE and Express JS
+## NODE and Express JS
 
-## NODE
+### NODE
 
 A simple node.js [server](https://nodejs.org/en/about/).
 
@@ -405,7 +394,7 @@ server.listen(port, hostname, () => {
 
 Note: we are running a node app using the `node` command in the terminal.
 
-## Express
+### Express
 
 The server we are using (browser sync) won't cut it when it comes to all the features needed to develop a website with all the http services we will need.
 
@@ -497,7 +486,7 @@ We no longer need to restart our server after making changes. Nodemon will watch
 
 Add this after the last route:
 
-```
+```js
 app.get('*', function(req, res){
   res.send(`
     <h1>Page not found</h1>
@@ -572,7 +561,7 @@ You should be able to see the HTML file in the browser at the specified port num
 
 ## CRUD - CREATE
 
-The CREATE operation is performed only by the browser if a POST request is sent to the server. This POST request can triggered either with JavaScript or through a <form> element.
+The CREATE operation is performed only by the browser if a POST request is sent to the server. This POST request can triggered either with JavaScript or through a `<form>` element.
 
 Add the following to index.html
 
@@ -598,7 +587,7 @@ Our form requires:
 
 1. an action attribute
 2. a method attribute
-3. and name attributes on all <input> elements within the form
+3. and name attributes on all `<input>` elements within the form
 
 The action attribute tells the browser where to navigate to in our Express app.
 
@@ -614,7 +603,7 @@ app.post('/entries', (req, res) => {
 
 Refresh your browser then enter something into your form element. You should see 'Hello' in your command line.
 
-Express doesn’t handle reading data from the <form> element on it’s own. We have to add a middleware package called body-parser to gain this functionality.
+Express doesn’t handle reading data from the `<form>` element on it’s own. We have to add a middleware package called body-parser to gain this functionality.
 
 `$ npm install body-parser --save`
 
@@ -628,7 +617,7 @@ const port = 9000;
 app.use(bodyParser.urlencoded({ extended: true }));
 ```
 
-The urlencoded method within body-parser tells body-parser to extract data from the <form> element and add them to the body property in the request object.
+The urlencoded method within body-parser tells body-parser to extract data from the `<form>` element and add them to the body property in the request object.
 
 Now, when you test your form, you should be able to see everything in the form field within the req.body object. Try doing a console.log:
 
@@ -722,9 +711,9 @@ app.post('/entries', (req, res) => {
 });
 ```
 
-Now enter something into the <form> element and you’ll be able to see an entry in your MongoDB collection.
+Now enter something into the `<form>` element and you’ll be able to see an entry in your MongoDB collection.
 
-#### Showing entries to users
+### Showing entries to users
 
 We have to do two things to show the entries stored in MongoLab to our users.
 
@@ -765,7 +754,7 @@ Let's generate HTML that displays all our entries.
 
 ## Template Engines
 
-http://expressjs.com/en/guide/using-template-engines.html
+[Template engines](http://expressjs.com/en/guide/using-template-engines.html)
 
 We can’t serve our index.html file and expect entries to magically appear because there’s no way to add dynamic content to a plain HTML file. What we can do instead, is to use template engines to help us out. Some popular template engines include jade/pug, Embedded JavaScript and Nunjucks.
 
@@ -892,7 +881,7 @@ e.g. devereld // dd123890
 
 Test to see if your account is active by entering this URL into a new browser tab (use your username after the tilde):
 
-http://oit2.scps.nyu.edu/~******
+`http://oit2.scps.nyu.edu/~******`
 
 Ensure you are using sFTP (port 22).
 
