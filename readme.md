@@ -1,23 +1,17 @@
-# Session 3
+# III Responsive Design, ExpressJS and an Introduction to GIT
 
 Today we continue to work with NPM, responsive design and start looking at Expressjs - exploring some of its capabilities.
 
 ## Homework
 
-* download this repo and review the steps below - try to get the communication between the form and mLab working.
+* watch Traversy's [Crash Course on Express](https://youtu.be/gnsO8-xJ8rs). You _must_ follow along.
+* download this repo and review the steps below. Get the communication between the form and your own account on mLab working.
 * do the Git / Github tutorial at [the Git Website](https://try.github.io/levels/1/challenges/1)
-* upload a finished version to github (remember to use a .gitignore file)
 
 ## Reading
 
 * an [overview of node js](https://en.wikipedia.org/wiki/Node.js#History)
 * get up and running with [express](https://expressjs.com/en/starter/installing.html)
-
-## NPM Review
-
-* Node-sass [command line interface](https://github.com/sass/node-sass#command-line-interface)
-* Browser-sync [CLI](https://www.browsersync.io/docs/command-line)
-* [Concurrently](https://www.npmjs.com/package/concurrently)
 
 ## GIT and GITHUB
 
@@ -388,7 +382,7 @@ nav {
   }
 ```
 
-You should consider making the menu disappear on small screen after a selection has been made using a conditional:
+You should consider making the menu disappear on small screen after a selection has been made using a conditional in the hashchange script:
 
 ```js
 if (window.innerWidth <= 740) {
@@ -402,7 +396,7 @@ if (window.innerWidth <= 740) {
 
 A simple node.js [server](https://nodejs.org/en/about/).
 
-Note the use of const, template strings, arrow functions and the request and response variables.
+Note the use of ES6 const, template strings and arrow functions as well as the request and response variables.
 
 DEMO: Save this as app.js in the project folder and run it using `node script.js`
 
@@ -425,11 +419,13 @@ server.listen(port, hostname, () => {
 
 ### Express
 
-The local server we are using (browser sync or live server) won't cut it when it comes to all the features needed to develop a website with all the http services we will need.
+The local server we are using (browser sync or live server) won't cut it when it comes to all the features needed to develop a website with the http services we will need.
 
 Express is a framework for building web applications on Node.js. It simplifies the server creation process that is already available in Node and allows you to use JavaScript as your server-side language.
 
-Aside: Here is the [generator](https://expressjs.com/en/starter/generator.html). Note the directory structure and the use of [Pug](https://pugjs.org/api/getting-started.html) as a template tool. Here's a [Pug converter](http://www.html2jade.org). Note: Jade was renamed to Pug due to a software trademark claim.
+Aside: Here is the [generator](https://expressjs.com/en/starter/generator.html). 
+
+Note the directory structure and the use of [Pug](https://pugjs.org/api/getting-started.html) as the default templating tool.
 
 Let's look at the canonical "Hello world" [example](https://expressjs.com/en/starter/hello-world.html).
 
@@ -447,7 +443,7 @@ const port = 9000;
 
 app.get('/', (req, res) => res.send('Hello World!')); // our first route
 
-app.get('/watchlist', function(req, res) {
+app.get('/watchlist', function(req, res) {  // our second route
   res.send(`
     <h1>Watchlist</h1>
     <p>Commentary on Watchlists will go here.</p>
@@ -472,7 +468,7 @@ Common web-development tasks are not directly supported by Node. If you want to 
 Add a second route that includes a variable:
 
 ```js
-app.get('/entry/:name?', function(req, res) {
+app.get('/entry/:name', function(req, res) {
   let name = req.params.name;
   res.send(`
     <h1>${name}</h1>
@@ -537,8 +533,6 @@ Add to app.js (above the app.get... line):
 app.use(express.static('app'));
 ```
 
-<!-- Note again that we have to stop and start the server whenever we change app.js. -->
-
 Comment out `app.use(express.static('app'))` - we'll make use of this later.
 
 ## CRUD
@@ -556,7 +550,7 @@ As we have seen, in Express, we handle a GET request with the get method:
 
 The first argument, `/,` is the path of the GET request (anything that comes after your domain name). For localhost:3000, the browser is actually looking for localhost:3000/. The path argument in this case is /.
 
-The second argument `(req, res) => res.send('Hello World!')` is a callback function that tells the server what to do when the path is matched. It takes in two arguments, a request object and a response object (req, res).
+The second argument `(req, res) => res.send('Hello World!')` is a callback function that tells the server what to do when the path is matched. It takes two arguments, a request object and a response object (req, res).
 
 Let’s use the res object to serve an index.html page back to the browser.
 
@@ -723,13 +717,15 @@ MongoClient.connect('mongodb://dannyboynyc:dd2345@ds139969.mlab.com:39969/bcl', 
 });
 ```
 
-We’re done setting up MongoDB. Start the server using `nodemon app.js` and make sure you don't get any errors.
+Start the server using `nodemon app.js` and check for any errors.
 
 Now, let’s create a collection - a named location to store data - to store content for our application.
 
 We can create the collection by using the string `entries` while calling MongoDB’s db.collection() method. Since a collection is created if it doesn't already exist we can save our first entry into the database while using the `save` method.
 
-Also, once we’re done saving, we have to redirect the user somewhere (or they’ll be stuck waiting for our server to go the `/entries` which doesn't exist except as a post route). In this case, we’re going to redirect them back to `/`.
+Also, once we’re done saving, we have to redirect the user somewhere (or they’ll be stuck waiting for our server to go the `/entries` which doesn't exist except as a post route).
+
+In this case, we’re going to redirect them back to `/`:
 
 ```js
 app.post('/entries', (req, res) => {
@@ -750,7 +746,7 @@ We have to do two things to show the entries stored in MongoLab to our users.
 1. Get entries from MongoLab
 2. Use a some form of dynamic html (a template engine) to display the entries
 
-We can get the entries from MongoLab by using the find method that’s available in the collection method.
+We can get the entries from MongoLab by using the find method available in the collection method:
 
 ```js
 app.get('/', (req, res) => {
@@ -764,7 +760,7 @@ The find method returns a cursor (A Mongo Object) that probably doesn’t make m
 
 This cursor object contains all entries from our database. It also contains a bunch of other properties and methods that allow us to work with data easily. One such method is the `toArray` method.
 
-The `toArray` method takes in a callback function that allows us to do stuff with entries we retrieved from MongoLab. Let’s try doing a console.log() for the results and see what we get!
+The `toArray` method takes in a callback function that allows us to do stuff with entries we retrieved from MongoLab. Let’s try doing a console.log() for the results and see what we get:
 
 ```js
 app.get('/', (req, res) => {
@@ -877,11 +873,13 @@ app.get('/', (req, res) => {
 
 Now, refresh your browser and you should be able to see all entries.
 
-## Integration with the old site
+## Notes
 
-We need to move the old index.html into index.ejs and re-enable app.use static.
+### Integration with the old site
 
-We can edit our package.json to proxy the browser sync to our express port number and add nodemon to our list of currently running scripts:
+Copy the old `app/index.html` into `index.ejs` and re-enable the `app.use(express.static('app'));` middleware.
+
+Edit our package.json to proxy the browser sync to our express port number and add nodemon to our list of currently running scripts:
 
 ```js
  "scripts": {
@@ -901,9 +899,7 @@ You will have to comment out the onload function in order to see index.ejs:
 // }
 ```
 
-### Notes
-
-## Server Accounts
+### Server Accounts
 
 Username is the first seven letters of your last name + first letter of first name
 
