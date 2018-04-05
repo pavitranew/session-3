@@ -12,9 +12,9 @@ Today we continue to work with NPM, responsive design and start looking at Expre
 
 Since we've created a nice, reusable package.json we should save it for future use.
 
-Git - a version control system originally invented for use developing Linux by Linus Torvalds. It is the standard version tool and integrates with Github to permit collaboration.
+Git - a version control system originally invented for use developing Linux by Linus Torvalds - integrates with Github to permit collaboration.
 
-There is a handy and very simple tutorial for Git on [the Git Website](https://try.github.io/levels/1/challenges/1) which is highly recommended for those new to git and github.
+There is a very simple tutorial for Git on [the Git Website](https://try.github.io/levels/1/challenges/1) which is highly recommended for those new to git and github.
 
 1. make sure terminal is in the correct directory using `cd` (drag-and-drop, copy paste)
 1. initialize the repo:
@@ -23,10 +23,9 @@ There is a handy and very simple tutorial for Git on [the Git Website](https://t
 git init
 ```
 
-Configuring Git for the first time - only if you haven't done this before:
+Configuring Git for the first time (only if you haven't done this before):
 
 ```sh
-git config
 git config --global user.name " ***** "
 git config --global user.email " ***** "
 git config --list
@@ -38,23 +37,25 @@ git config --list
 git add .
 ```
 
-Once you have made changes you need to commit them
+Perform an initial commit. (Once you have made changes you will need to add and commit them again.)
 
 ```sh
 git commit -m 'initial commit'
 ```
 
-Note: `git commit` without the `-m` flag goes into VI - a text popular UNIX text editor. To avoid this always using the -m flag when committing. (If you end up in VI, hit ESC and type “:q” to exit.)
+Note: `git commit` without the `-m` flag goes into VI - a text popular UNIX text editor.
 
-* Git Status
+To avoid this always using the -m flag when committing. (If you end up in VI, hit ESC and type “:q” to exit.)
+
+* Git Status  - use this command liberally until your familiar with the system.
 
 ```sh
-git status
-On branch master
-nothing to commit, working directory clean
+$ git status
+> On branch master
+> nothing to commit, working directory clean
 ```
 
-* Create a new branch:
+* Create and checkout a new branch:
 
 ```sh
 git branch <new branchname>
@@ -64,7 +65,7 @@ git branch
 
 * merge branches:
 
-* make sure the branch you want to merge is clear (`$ git status`)
+* make sure the branch you want to merge is clear (`$ git status` > clean)
 * checkout the branch you want to merge into
 * run status on that branch too (make sure it is clear)
 
