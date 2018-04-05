@@ -4,9 +4,9 @@ const navLinks = nav.querySelector('#nav-links');
 const markup = `${navItems.map(listItem => `<li><a href="${listItem.link}">${listItem.label}</a></li>`).join('')}`;
 navLinks.innerHTML = markup;
 
-const logo = document.querySelector('#main ul li');
-logo.classList.add('logo');
-logo.firstChild.innerHTML = '<img src="img/logo.svg" />';
+// const logo = document.querySelector('#main ul li');
+// logo.classList.add('logo');
+// logo.firstChild.innerHTML = '<img src="img/logo.svg" />';
 
 // sticky nav
 let topOfNav = nav.offsetTop;
@@ -28,7 +28,6 @@ const siteWrap = document.querySelector('.site-wrap');
 
 window.onhashchange = function() {
   let newloc = window.location.hash;
-  // console.log(newloc)
   let newContent = navItems.filter(
     navItem => navItem.link == newloc
   )

@@ -23,3 +23,14 @@ nav a {
     display: inline-block;
     color: white;
 }
+
+.logo {
+    max-width: 0;
+    overflow: hidden;
+    background: white;
+}
+
+.logo img {
+    padding-top: 0.25rem;
+    width: 2.5rem;
+}

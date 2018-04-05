@@ -19,13 +19,6 @@ Today we continue to work with NPM, responsive design and start looking at Expre
 * Browser-sync [CLI](https://www.browsersync.io/docs/command-line)
 * [Concurrently](https://www.npmjs.com/package/concurrently)
 
-* cd into the session directory install the dev-dependencies and run the script:
-
-```bash
-npm install
-npm run boom!
-```
-
 ## GIT and GITHUB
 
 Since we've created a nice, reusable package.json we should save it for future use.
@@ -124,7 +117,63 @@ git push -u origin master
 
 Finally - when downloading a github repo use the `clone` method to move it to your local disk while retaining the git history and branches.
 
-## Hashes Solved
+## Babel
+
+* cd into the session directory install the dev-dependencies and run the script:
+
+```sh
+npm install
+```
+
+Install the dependencies babel-cli and babel-preset-es2015 and add presets to package.json.
+
+`$ npm install babel-cli --save-dev`
+
+`$ npm install --save-dev babel-preset-es2015`
+
+Note the documentation for [babel-cli](https://babeljs.io/docs/usage/cli/) and the message:
+
+`🙌 Thanks for using Babel: we recommend using babel-preset-env now: please read babeljs.io/env to update!`
+
+Add a babel script (note the output path references a min folder we need to create) and babel presets to package.json:
+
+```js
+{
+  ...
+  "scripts": {
+    ...
+    "babel": "babel app/js/main.js --watch --source-maps --out-file app/js/main-compiled.js",
+    ...
+  },
+
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-preset-es2015": "^6.22.0",
+
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  }
+}
+```
+
+Add babel to our script:
+
+```bash
+"boom!": "concurrently \"npm run start\" \"npm run babel\" "
+```
+
+Don't forget to change the link to the main.js in index.html to point to the new file.
+
+`<script src="js/main-compiled.js"></script>`
+
+and run `npm run boom!`.
+
+Or, for users using VS Code for SASS transpiling and browser refresh:  `npm run babel`
+
+## Hashes - Solved
 
 ```js
 // hashes
@@ -162,11 +211,9 @@ function renderPage(newContent){
 }
 ```
 
-## Responsive Navigation continued
+## Responsive Navigation - continued
 
-Move all nav related css into a new partial `_nav.scss` and import:
-
-`@import "imports/nav";`
+* Reminder - use the meta tag `<meta name="viewport" content="width=device-width, initial-scale=1.0">` to ensure responsive design works on devices.
 
 Nest and refactor the CSS rules for the nav:
 
@@ -315,55 +362,61 @@ window.onhashchange = function() {
 };
 ```
 
-* Reminder - use the meta tag `<meta name="viewport" content="width=device-width, initial-scale=1.0">` to ensure responsive design works on devices.
+Final `_nav.scss` partial:
 
-## Babel
+```css
+nav {
+    background: #007eb6;
+    width: 100%;
+    transition: all 0.5s;
+    .fixed-nav & {
+        position: fixed;
+        top: 0;
+        box-shadow: 0 5px 3px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+    ul {
+        list-style: none;
+        display: none;
+        @media(min-width: $break-two){
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 2.5rem;
+        }
+    }
+    li {
+        flex: 1;
+        padding: 0.5rem;
+        @media(min-width: $break-two){
+        text-align: center;
+        }
+    }
+    a {
+        text-decoration: none;
+        display: inline-block;
+        color: white;
+    }
+}
 
-Install the dependencies babel-cli and babel-preset-es2015 and add presets to package.json.
+.logo {
+    display: flex;
+    background: white;
+    height: 2.5rem;
+    @media(min-width: $break-two){
+        display: none;
+    }
+    img {
+        padding-top: 0.25rem;
+        width: 2.5rem;
+    }
+}
 
-`$ npm install babel-cli --save-dev`
-
-`$ npm install --save-dev babel-preset-es2015`
-
-Note the documentation for [babel-cli](https://babeljs.io/docs/usage/cli/) and the message `🙌 Thanks for using Babel: we recommend using babel-preset-env now: please read babeljs.io/env to update!`
-
-Add a babel script (note the output path references a min folder we need to create) and babel presets to package.json:
-
-```js
-{
-
-  "scripts": {
-
-    "babel": "babel app/js/main.js --watch --source-maps --out-file app/js/main-compiled.js",
-
-  },
-
-  "devDependencies": {
-    "babel-cli": "^6.22.2",
-    "babel-preset-es2015": "^6.22.0",
-
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
-  }
+.menu-open #nav-links {
+    display: flex;
+    flex-direction: column;
 }
 ```
-
-Mac: add babel to our concurrent commands:
-
-```bash
-"boom!": "concurrently \"npm run start\" \"npm run watch-node-sass\"  \"npm run babel\" "
-```
-
-and run `npm run boom!`
-
-Note: PC / Mac users using VS Code for SASS transpiling and browser refresh need only run `npm run babel`
-
-Don't forget to change the link to the main.js in index.html to point to the new file.
-
-`<script src="js/main-compiled.js"></script>`
 
 ## NODE and Express JS
 
@@ -392,11 +445,9 @@ server.listen(port, hostname, () => {
 });
 ```
 
-Note: we are running a node app using the `node` command in the terminal.
-
 ### Express
 
-The server we are using (browser sync) won't cut it when it comes to all the features needed to develop a website with all the http services we will need.
+The local server we are using (browser sync or live server) won't cut it when it comes to all the features needed to develop a website with all the http services we will need.
 
 Express is a framework for building web applications on Node.js. It simplifies the server creation process that is already available in Node and allows you to use JavaScript as your server-side language.
 
@@ -432,13 +483,13 @@ app.listen(port, function() {
 
 Run with `$ node app.js`
 
-Note and test the routing above.
+Note and test the `watchlist` route above.
 
-Note that console.log is now using the terminal, _not_ the browser's.
+Note that console.log is now using the terminal, _not_ the browser's console.
 
 Note the [get](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) verb used in our [basic express route](https://expressjs.com/en/starter/basic-routing.html).
 
-Common web-development tasks are not directly supported by Node. If you want to add specific handling for different HTTP verbs (e.g. GET, POST, DELETE, etc.), separately handle requests at different URL paths ("routes"), serve static files, or use templates to dynamically create the response, then you will need to write the code yourself, or use ExpressJS.
+Common web-development tasks are not directly supported by Node. If you want to add specific handling for different HTTP verbs (e.g. GET, POST, DELETE, etc.), separately handle requests at different URL paths ("routes"), serve static files, or use templates to dynamically create the response, you will need to write the code yourself. Or simply use ExpressJS.
 
 Add a second route that includes a variable:
 
@@ -457,13 +508,13 @@ Test in the browser after restarting the node process.: `http://localhost:9000/e
 Multiple parameters:
 
 ```js
-app.get('/entry/:name?/:link?', function(req, res) {
+app.get('/entry/:name?/:link', function(req, res) {
   let name = req.params.name;
-  let hashlink = `#${req.params.link}`;
+  let link = `${req.params.link}`;
   res.send(`
     <h1>${name}</h1>
     <p>Commentary on ${name} will go here.</p>
-    <p>${hashlink}
+    <p>${link}</p>
     `);
 });
 ```
@@ -508,7 +559,7 @@ Add to app.js (above the app.get... line):
 app.use(express.static('app'));
 ```
 
-Note again that we have to stop and start the server whenever we change app.js.
+<!-- Note again that we have to stop and start the server whenever we change app.js. -->
 
 Comment out `app.use(express.static('app'))` - we'll make use of this later.
 
@@ -580,6 +631,7 @@ Add the following to index.html
     display: block;
     margin: 1rem;
     width: 70%;
+  }
 </style>
 ```
 
@@ -601,7 +653,7 @@ app.post('/entries', (req, res) => {
 });
 ```
 
-Refresh your browser then enter something into your form element. You should see 'Hello' in your command line.
+Refresh your browser then click the form button. You should see 'Hello' in your command line.
 
 Express doesn’t handle reading data from the `<form>` element on it’s own. We have to add a middleware package called body-parser to gain this functionality.
 
@@ -635,7 +687,7 @@ Express apps can use any database mechanism supported by Node including PostgreS
 
 We first have to install the driver for the popular NoSQL MongoDB through npm if we want to use it as our database.
 
-`$ npm install mongodb --save`
+`$ npm install mongodb@2.2.5 --save`
 
 Once installed, we can connect to MongoDB through the Mongo.Client‘s connect method as shown in the sample code below:
 
@@ -730,11 +782,11 @@ app.get('/', (req, res) => {
 });
 ```
 
-The find method returns a cursor (A Mongo Object) that probably doesn’t make much sense when you console.log it out.
+The find method returns a cursor (A Mongo Object) that probably doesn’t make much sense when you `console.log` it out.
 
-Yet this cursor object contains all entries from our database. It also contains a bunch of other properties and methods that allow us to work with data easily. One such method is the toArray method.
+This cursor object contains all entries from our database. It also contains a bunch of other properties and methods that allow us to work with data easily. One such method is the `toArray` method.
 
-The toArray method takes in a callback function that allows us to do stuff with entries we retrieved from MongoLab. Let’s try doing a console.log() for the results and see what we get!
+The `toArray` method takes in a callback function that allows us to do stuff with entries we retrieved from MongoLab. Let’s try doing a console.log() for the results and see what we get!
 
 ```js
 app.get('/', (req, res) => {
@@ -770,7 +822,7 @@ and in app.js:
 
 Let’s first create an index.ejs file within a views folder so we can start populating data.
 
-```bash
+```sh
 mkdir views
 touch views/index.ejs
 ```
@@ -786,11 +838,13 @@ Now, copy the contents of index.html into index.ejs and add.
 </div>
 ```
 
-In EJS, you can write JavaScript within <% and %> tags. You can also output JavaScript as strings if you use the <%= and %> tags.
+In EJS, you can write JavaScript within `<%` and `%>` tags.
 
-Here, you can see that we’re basically looping through the entries array and creating strings with entries[i].label and entries[i].content.
+You can also output JavaScript as strings if you use the `<%=` and `%>` tags.
 
-The complete index.ejs file so far should be:
+Here, you can see that we’re basically looping through the entries array and creating strings with `entries[i].label` and `entries[i].content`.
+
+The complete `index.ejs` file so far should be something like:
 
 ```html
 <!DOCTYPE html>
@@ -807,7 +861,6 @@ The complete index.ejs file so far should be:
   </style>
 </head>
 <body>
-  <p>Testing 1 2 3</p>
 
   <form action="/entries" method="POST">
     <input type="text" placeholder="label" name="label">
@@ -827,7 +880,9 @@ The complete index.ejs file so far should be:
 </html>
 ```
 
-Finally, we have to render this index.ejs file when handling the GET request. Here, we’re setting the results (an array) as the entries array we used in index.ejs above.
+Finally, we have to render `index.ejs` when handling the GET request.
+
+Here, we’re setting the results (an array) as the entries array we used in `index.ejs` above.
 
 ```js
 app.get('/', (req, res) => {
@@ -848,14 +903,15 @@ Now, refresh your browser and you should be able to see all entries.
 
 We need to move the old index.html into index.ejs and re-enable app.use static.
 
-We can edit our package.json to proxy the browser sync to our express port number and add nodemon to our list of currently running scripts.
+We can edit our package.json to proxy the browser sync to our express port number and add nodemon to our list of currently running scripts:
 
 ```js
  "scripts": {
-    "watch-node-sass": "node-sass --watch scss/styles.scss --output app/css/  --source-map true",
-    "start": "browser-sync start --proxy 'localhost:9000' --browser \"google chrome\"  --files 'app'",
+    "sassy": "node-sass --watch \"scss/styles.scss\"  --output \"app/css/\" --source-map true",
+    "start": "browser-sync start --proxy 'localhost:9000' --server \"app\" --files \"app\"",
     "babel": "babel app/js/main.js --watch --source-maps --out-file app/js/main-compiled.js",
-    "boom!": "concurrently \"nodemon app.js\" \"npm run start\" \"npm run watch-node-sass\" "
+    "boom!": "concurrently \"nodemon app.js\" \"npm run start\" \"npm run sassy\" \"babel\" "
+    "boom-no-sass!": "concurrently \"nodemon app.js\" \"npm run start\" \"babel\" "
   },
 ```
 
