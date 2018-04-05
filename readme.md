@@ -292,17 +292,6 @@ ul {
     }
 }
 ```
-<!-- 
-Refactor to stack the list items and simplify:
-
-```css
-li {
-  padding: 1rem;
-  @media (min-width: $break-two) {
-    flex: 1;
-  }
-}
-``` -->
 
 Make clicking on the logo show the menu on narrow screens:
 
@@ -327,24 +316,16 @@ Use the class to make the nav visible:
 
 Adjust the formatting of the list items:
 
-
-
-<!-- Hide the hamburger icon after a link has been clicked:
-
-```js
-window.onhashchange = function() {
-  let newloc = window.location.hash;
-  let newContent = navItems.filter(navItem => navItem.link == newloc);
-  siteWrap.innerHTML = `
-  <h1>${newContent[0].label}</h1>
-  <h2>${newContent[0].header}</h2>
-  <p>${newContent[0].content}</p>
-  `;
-  if (window.innerWidth <= 740) {
-    showMenu();
-  }
-};
-``` -->
+```css
+li {
+    background: #007eb6;
+    flex: 1;
+    padding: 0.5rem;
+    @media(min-width: $break-two){
+      text-align: center;
+    }
+}
+```
 
 Final `_nav.scss` partial:
 
@@ -353,23 +334,26 @@ nav {
     background: #007eb6;
     width: 100%;
     transition: all 0.5s;
+    position: relative;
+    z-index: 1;
     .fixed-nav & {
         position: fixed;
         top: 0;
         box-shadow: 0 5px 3px rgba(0, 0, 0, 0.2);
-        z-index: 1;
+        width: 100%;
     }
     ul {
-        list-style: none;
         display: none;
-        @media(min-width: $break-two){
-        display: flex;
-        justify-content: center;
-        align-items: center;
         height: 2.5rem;
+        list-style: none;
+        @media(min-width: $break-two){
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
     li {
+        background: $link;
         flex: 1;
         padding: 0.5rem;
         @media(min-width: $break-two){
@@ -384,9 +368,8 @@ nav {
 }
 
 .logo {
-    display: flex;
     background: white;
-    height: 2.5rem;
+    display: block;
     @media(min-width: $break-two){
         display: none;
     }
@@ -399,6 +382,17 @@ nav {
 .showmenu #nav-links {
     display: flex;
     flex-direction: column;
+}
+  body.fixed-nav .site-wrap {
+    transform: scale(1);
+  }
+```
+
+You should consider making the menu disappear on small screen after a selection has been made using a conditional:
+
+```js
+if (window.innerWidth <= 740) {
+  showMenu();
 }
 ```
 
