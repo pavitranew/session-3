@@ -133,6 +133,7 @@ const siteWrap = document.querySelector('.site-wrap');
 window.onload = function(){
   let newContent;
   if(!window.location.hash){
+    console.log('bye')
     newContent = navItems.filter(
       navItem => navItem.link == '#watchlist'
     )
@@ -144,13 +145,13 @@ window.onload = function(){
   renderPage(newContent)
 }
 
-
 window.onhashchange = function() {
   let newloc = window.location.hash;
   let newContent = navItems.filter(
     navItem => navItem.link == newloc
   )
-  renderPage(newContent)
+  renderPage(newContent);
+  window.scrollTo(0,0);
 }
 
 function renderPage(newContent){

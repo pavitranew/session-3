@@ -46,7 +46,8 @@ window.onhashchange = function() {
   let newContent = navItems.filter(
     navItem => navItem.link == newloc
   )
-  renderPage(newContent)
+  renderPage(newContent);
+  window.scrollTo(0,0);
 }
 
 function renderPage(newContent){

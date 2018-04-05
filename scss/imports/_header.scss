@@ -1,12 +1,12 @@
 header {
-  height: 24vh;
+  height: 22vh;
   background: url(../img/img.jpg) center no-repeat;
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
   @media(min-width: $break-two){
-    height: 14vh;
+    height: 32vh;
   }
   h1 {
       color: white;

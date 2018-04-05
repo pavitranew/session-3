@@ -19,7 +19,7 @@ html {
 
 .site-wrap {
   max-width: 90vw;
-  margin: 40px auto;
+  margin: 20px auto;
   background: white;
   padding: 20px 20px;
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.05);
@@ -70,7 +70,7 @@ body.fixed-nav .site-wrap {
 }
 
 header {
-  height: 24vh;
+  height: 22vh;
   background: url(../img/img.jpg) center no-repeat;
   background-size: cover;
   display: flex;
@@ -80,7 +80,7 @@ header {
 
 @media (min-width: 46.25em) {
   header {
-    height: 14vh;
+    height: 32vh;
   }
 }
 
