@@ -14,7 +14,7 @@ Since we've created a nice, reusable package.json we should save it for future u
 
 Git - a version control system originally invented for use developing Linux by Linus Torvalds - integrates with Github to permit collaboration.
 
-There is a very simple tutorial for Git on [the Git Website](https://try.github.io/levels/1/challenges/1) which is highly recommended for those new to git and github.
+There is a simple tutorial for Git on [the Git Website](https://try.github.io/levels/1/challenges/1) which is highly recommended for those new to git and github.
 
 1. make sure terminal is in the correct directory using `cd` (drag-and-drop, copy paste)
 1. initialize the repo:
@@ -139,7 +139,7 @@ Add a babel script (note the output path references a min folder we need to crea
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-preset-es2015": "^6.22.0",
-
+    ...
   },
   "babel": {
     "presets": [
@@ -155,7 +155,7 @@ Add babel to our script:
 "boom!": "concurrently \"npm run start\" \"npm run babel\" "
 ```
 
-Don't forget to change the link to the main.js in index.html to point to the new file.
+Change the link to the main.js in index.html to point to the new file that babel will create.
 
 `<script src="js/main-compiled.js"></script>`
 
