@@ -1,13 +1,12 @@
 {
   "name": "session-2",
   "version": "1.0.0",
-  "description": "significanrt change ## Reading",
+  "description": "## Reading",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "browser-sync start --server \"app\" --files \"app\"",
-    "sassy": "node-sass --watch \"scss\"  --output \"app/css/\" --source-map true",
-    "boom!": "concurrently \"npm run start\" \"npm run sassy\" "
+    "json": "json-server --watch db.json --port 3004",
+    "sassy": "node-sass --watch \"scss\"  --output \"app/css/\""
   },
   "repository": {
     "type": "git",
@@ -21,8 +20,8 @@
   },
   "homepage": "https://github.com/front-end-intermediate/session-2#readme",
   "devDependencies": {
-    "browser-sync": "^2.23.6",
-    "concurrently": "^3.5.1",
-    "node-sass": "^4.8.3"
+    "browser-sync": "^2.24.4",
+    "json-server": "^0.13.0",
+    "node-sass": "^4.9.0"
   }
 }
