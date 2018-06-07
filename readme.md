@@ -165,7 +165,7 @@ Remember, you can pick and choose commands or create new batches using concurren
 
 `"boomy!": "concurrently \"npm run start\" \"npm run babel\" "`
 
-## Hashes - Solved
+<!-- ## Hashes - Solved
 
 ```js
 // hashes
@@ -200,13 +200,15 @@ function renderPage(newContent){
   ${newContent[0].content}
   `
 }
-```
+``` -->
 
 ## Responsive Navigation - continued
 
 * Reminder - use the meta tag `<meta name="viewport" content="width=device-width, initial-scale=1.0">` to ensure responsive design works on devices.
 
-Nest and refactor the CSS rules for the nav:
+
+
+<!-- Nest and refactor the CSS rules for the nav:
 
 ```css
 nav {
@@ -384,7 +386,7 @@ You should consider making the menu disappear on small screen after a selection 
 if (window.innerWidth <= 740) {
   showMenu();
 }
-```
+``` -->
 
 ## NODE and Express JS
 
