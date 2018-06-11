@@ -24,7 +24,6 @@ function fixNav() {
   }
 }
 
-
 function navigate() {
   let newloc = location.hash.substr(1);
   fetchLab(newloc, function (content) {
@@ -81,7 +80,6 @@ function showMenu(e) {
   document.body.classList.toggle('show');
   const navLinks = document.querySelectorAll('.navitems a');
   navLinks.forEach(link => link.addEventListener('click', dump))
-  console.log(navLinks)
   e.preventDefault();
 }
 
