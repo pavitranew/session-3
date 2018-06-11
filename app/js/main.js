@@ -56,6 +56,7 @@ function navigate() {
     let newContent = content.filter(contentItem => contentItem.label == newloc);
     siteWrap.innerHTML = `
     <h2>${newContent[0].header}</h2>
+    ${newContent[0].image}
     ${newContent[0].content}
     `;
   })
