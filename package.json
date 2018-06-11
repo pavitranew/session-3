@@ -26,6 +26,13 @@
     "browser-sync": "^2.24.4",
     "concurrently": "^3.5.1",
     "json-server": "^0.13.0",
-    "node-sass": "^4.9.0"
+    "node-sass": "^4.9.0",
+    "nodemon": "^1.17.5"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "mongodb": "^2.2.5"
   }
 }

@@ -512,7 +512,7 @@ Add this after the last route:
 ```js
 app.get('*', function(req, res){
   res.send(`
-    <h1>Page not found</h1>
+    <h1>Oopsy! Page not found</h1>
     `)
 })
 ```
@@ -662,7 +662,7 @@ We first have to install the driver for the popular NoSQL MongoDB through npm if
 Once installed, we can connect to MongoDB through the Mongo.Client‘s connect method as shown in the sample code below:
 
 ```js
-var MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 
 MongoClient.connect('mongodb://localhost:27017/animals', function(err, db) {
   if (err) throw err;

@@ -2,19 +2,14 @@ const nav = document.getElementById('main');
 const navbar = nav.querySelector('.navitems');
 const siteWrap = document.querySelector('.site-wrap');
 
-fetchData(null, function (content) {
+fetchLab(null, function (content) {
   const markup =
-    `<ul>
-    ${content.map(
-      listItem => `<li><a href="${listItem.link}">${listItem.label}</a></li>`
-    ).join('')}
-    </ul>`;
+  `<ul>
+  ${content.map(
+    listItem => `<li><a href="#${listItem.label}">${listItem.label}</a></li>`
+  ).join('')}
+  </ul>`;
   navbar.innerHTML = markup;
-
-  // const logo = document.querySelector('#main ul li');
-  // logo.classList.add('logo');
-  // logo.firstChild.innerHTML = '<img src="img/logo.svg" />';
-  
 })
 
 let topOfNav = nav.offsetTop;
@@ -31,28 +26,40 @@ function fixNav() {
 
 
 function navigate() {
-  let newloc = window.location.hash;
-  fetchData(newloc, function (content) {
-    let newContent = content.filter( contentItem => contentItem.link == newloc );
+  let newloc = location.hash.substr(1);
+  fetchLab(newloc, function (content) {
+    let newContent = content.filter(contentItem => contentItem.label == newloc);
     siteWrap.innerHTML = `
     <h2>${newContent[0].header}</h2>
-    ${newContent[0].image}
     ${newContent[0].content}
     `;
   })
 }
 
-
-function fetchData(hash, callback) {
-  var xhr = new XMLHttpRequest();
-
-  xhr.onload = function () {
-    callback(JSON.parse(xhr.response));
-  };
-  
-  xhr.open('GET', 'http://localhost:3004/content', true);
-  xhr.send();
+function fetchLab(hash, callback) {
+  fetch('https://api.mlab.com/api/1/databases/bcl/collections/entries?apiKey=oZ92RXFzah01L1xNSWAZWZrm4kn6zF0n')
+  .then( (response) => {
+    if (response.status != 200) {
+      window.alert("Sorry, looks like there's been an error" + response.status);
+      return;
+    }
+    response.json().then(function(data) {
+      let api = data;
+      callback(api);
+    })
+  })
 }
+
+// function fetchData(hash, callback) {
+//   var xhr = new XMLHttpRequest();
+  
+//   xhr.onload = function () {
+//     callback(JSON.parse(xhr.response));
+//   };
+  
+//   xhr.open('GET', 'http://localhost:3004/content', true);
+//   xhr.send();
+// }
 
 
 if (!location.hash) {
