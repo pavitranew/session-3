@@ -44,6 +44,10 @@ img {
   transition: transform 0.5s;
 }
 
+.site-wrap h2 {
+  margin-bottom: 0.5rem;
+}
+
 body.fixed-nav .site-wrap {
   transform: scale(1);
 }
