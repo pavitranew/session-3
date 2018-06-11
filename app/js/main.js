@@ -9,7 +9,7 @@ fetchData(null, function (content) {
       listItem => `<li><a href="${listItem.link}">${listItem.label}</a></li>`
     ).join('')}
     </ul>`;
-  nav.innerHTML = markup;
+  navbar.innerHTML = markup;
 
   // const logo = document.querySelector('#main ul li');
   // logo.classList.add('logo');
@@ -63,3 +63,21 @@ navigate();
 
 window.addEventListener('scroll', fixNav);
 window.addEventListener('hashchange', navigate);
+
+
+
+const logo = document.querySelector('.logo')
+
+logo.addEventListener('click', showMenu);
+
+function showMenu(e) {
+  document.body.classList.toggle('show');
+  const navLinks = document.querySelectorAll('.navitems a');
+  navLinks.forEach(link => link.addEventListener('click', dump))
+  console.log(navLinks)
+  e.preventDefault();
+}
+
+function dump(){
+  document.body.classList.toggle('show');
+}

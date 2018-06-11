@@ -4,18 +4,26 @@ nav {
   transition: all 0.5s;
   z-index: 1;
   
-  
   ul {
     list-style: none;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 2.5rem;
+    flex-direction: column;
+    @media (min-width: $break-two){
+      flex-direction: row;
+      height: 2.5rem;
+      justify-content: center;
+      align-items: center;
+    }
   }
   
   li {
     flex: 1;
-    text-align: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid #fff;
+    @media (min-width: $break-two){
+      text-align: center;
+      border-bottom: none;
+    }
   }
   
   a {
@@ -32,19 +40,48 @@ nav {
     z-index: 1;
   }
 }
-
 .logo img {
   padding-top: 0.25rem;
   width: 2.5rem;
 }
 .logo {
-  max-width:0;
-  overflow: hidden;
   background: white;
+  @media (min-width: $break-two){
+    display:  none;
+  }
+}
+
+.navitems {
+  // display:none;
+
+  max-height: 0;
+  overflow: hidden;
   transition: all 0.5s;
-  font-weight: 600;
-  font-size: 30px;
+
+  @media (min-width: $break-two){
+    // display:block;
+
+    max-height: 2.5rem;
+    overflow: hidden;
+  }
 }
-.fixed-nav .logo {
-  max-width:500px;
+.show .navitems {
+  // display: block !important;
+
+  max-height: 800px;
 }
+// .logo img {
+//   padding-top: 0.25rem;
+//   width: 2.5rem;
+// }
+// .logo {
+//   max-width:0;
+//   overflow: hidden;
+//   background: white;
+//   transition: all 0.5s;
+//   font-weight: 600;
+//   font-size: 30px;
+// }
+// .fixed-nav .logo {
+//   max-width:500px;
+// }

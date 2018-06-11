@@ -6,7 +6,8 @@
   "scripts": {
     "start": "browser-sync start --server \"app\" --files \"app\"",
     "json": "json-server --watch db.json --port 3004",
-    "sassy": "node-sass --watch \"scss\"  --output \"app/css/\""
+    "sassy": "node-sass --watch \"scss\"  --output \"app/css/\" --source-map true",
+    "boom!": "concurrently 'npm run start' 'npm run json' 'npm run sassy' "
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,10 @@
   },
   "homepage": "https://github.com/front-end-intermediate/session-2#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "browser-sync": "^2.24.4",
+    "concurrently": "^3.5.1",
     "json-server": "^0.13.0",
     "node-sass": "^4.9.0"
   }
