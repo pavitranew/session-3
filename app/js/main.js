@@ -2,21 +2,6 @@ const nav = document.getElementById('main');
 const navbar = nav.querySelector('.navitems');
 const siteWrap = document.querySelector('.site-wrap');
 
-fetchData(null, function (content) {
-  const markup =
-    `<ul>
-    ${content.map(
-      listItem => `<li><a href="${listItem.link}">${listItem.label}</a></li>`
-    ).join('')}
-    </ul>`;
-  nav.innerHTML = markup;
-
-  // const logo = document.querySelector('#main ul li');
-  // logo.classList.add('logo');
-  // logo.firstChild.innerHTML = '<img src="img/logo.svg" />';
-  
-})
-
 let topOfNav = nav.offsetTop;
 
 function fixNav() {
@@ -29,6 +14,19 @@ function fixNav() {
   }
 }
 
+fetchData(null, function (content) {
+  const markup =
+    `<ul>
+    ${content.map(
+      listItem => `<li><a href="${listItem.link}">${listItem.label}</a></li>`
+    ).join('')}
+    </ul>`;
+  nav.innerHTML = markup;
+  // const logo = document.querySelector('#main ul li');
+  // logo.classList.add('logo');
+  // logo.firstChild.innerHTML = '<img src="img/logo.svg" />';
+  
+})
 
 function navigate() {
   let newloc = window.location.hash;
@@ -41,7 +39,6 @@ function navigate() {
     `;
   })
 }
-
 
 function fetchData(hash, callback) {
   var xhr = new XMLHttpRequest();

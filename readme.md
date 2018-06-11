@@ -107,7 +107,7 @@ git push -u origin master
 
 Finally - when downloading a github repo use the `clone` method to move it to your local disk while retaining the git history and branches.
 
-## Babel
+<!-- ## Babel
 
 * cd into the session directory install the dev-dependencies and run the script:
 
@@ -164,229 +164,239 @@ and run `npm run boom!`.
 Remember, you can pick and choose commands or create new batches using concurrently. For users using VS Code for SASS transpiling and browser refresh:  `npm run babel` or 
 
 `"boomy!": "concurrently \"npm run start\" \"npm run babel\" "`
-
-<!-- ## Hashes - Solved
-
-```js
-// hashes
-const siteWrap = document.querySelector('.site-wrap');
-
-window.onload = function(){
-  let newContent;
-  if(!window.location.hash){
-    newContent = navItems.filter(
-      navItem => navItem.link == '#watchlist'
-    )
-  } else {
-    newContent = navItems.filter(
-      navItem => navItem.link == window.location.hash
-    )
-  }
-  renderPage(newContent)
-}
-
-window.onhashchange = function() {
-  let newloc = window.location.hash;
-  let newContent = navItems.filter(
-    navItem => navItem.link == newloc
-  )
-  renderPage(newContent);
-  window.scrollTo(0,0);
-}
-
-function renderPage(newContent){
-  siteWrap.innerHTML = `
-  <h2>${newContent[0].header}</h2>
-  ${newContent[0].content}
-  `
-}
-``` -->
+ -->
 
 ## Responsive Navigation - continued
 
-* Reminder - use the meta tag `<meta name="viewport" content="width=device-width, initial-scale=1.0">` to ensure responsive design works on devices.
+* from Session II
 
+#### Concurrently
 
+As it stands we need multiple terminal tabs to run our npm scripts. To improve this we will install a simple utility called Concurrently and write a 'master' npm script.
 
-<!-- Nest and refactor the CSS rules for the nav:
+Stop all processes running in the terminals with Control-c and dispose of them.
 
-```css
-nav {
-    background: #007eb6;
-    width: 100%;
-    transition: all 0.5s;
-    .fixed-nav & {
-        position: fixed;
-        top: 0;
-        box-shadow: 0 5px 3px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
-    ul {
-        list-style: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 2.5rem;
-    }
-    li {
-        flex: 1;
-        text-align: center;
-    }
-    a {
-        text-decoration: none;
-        display: inline-block;
-        color: white;
-    }
-}
+Use the remaining terminal to install and register Concurrently:
 
-.logo {
-    max-width: 0;
-    overflow: hidden;
-    background: white;
-    img {
-        padding-top: 0.25rem;
-        width: 2.5rem;
-    }
-}
-```
+* `$ npm install concurrently --save-dev`
 
-We are using the logo as a hamburger.
-
-Display the logo on small screens while hiding it on large:
-
-```css
-.logo {
-    background: white;
-    display: block;
-    @media(min-width: $break-two){
-        display: none;
-    }
-    img {
-        padding-top: 0.25rem;
-        width: 2.5rem;
-    }
-}
-```
-
-Get the navigation to display vertically on small screens.
-
-Hide the nav-links initially on small screens while maintaining the flex display characteristics on wide:
-
-```css
-ul {
-    display: none;
-    height: 2.5rem;
-    list-style: none;
-    @media(min-width: $break-two){
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-}
-```
-
-Make clicking on the logo show the menu on narrow screens:
+Add some new scripts:
 
 ```js
-const logo = document.querySelector('.logo');
-logo.addEventListener('click', showMenu);
-
-function showMenu() {
-  document.body.classList.toggle('showmenu');
-  event.preventDefault();
-}
+"boom!": "concurrently \"npm run start\" \"npm run json\" \"npm run sassy\" ",
+"boomlet!": "concurrently \"npm run start\" \"npm run json\" "
 ```
 
-Use the class to make the nav visible:
+Examine the output and inspect the html in the developer tool.
 
-```css
-.showmenu #nav-links {
-    display: flex;
-    flex-direction: column;
-}
+Cancel the process with Control-c  and add mapping to the NPM script:
+
+```js
+  "sassy": "node-sass --watch \"scss\"  --output \"app/css/\" --source-map true"
 ```
 
-Adjust the formatting of the list items:
+Run all processes:
 
-```css
-li {
-    background: #007eb6;
-    flex: 1;
-    padding: 0.5rem;
-    @media(min-width: $break-two){
-      text-align: center;
-    }
-}
+* `$ npm run boom!`
+
+Note that you may end up with multiple browser tabs by doing this. They are identical.
+
+### Review
+
+* the meta tag `<meta name="viewport" content="width=device-width, initial-scale=1.0">` 
+* `min-width` vs `max-width` in media queries
+* mobile first design using `min-width` to add features to wide screens
+* nesting and media queries
+
+### The Navbar
+
+Note - the code responsible for adding the logo in `main.js` has been commented out:
+
+```js
+// const logo = document.querySelector('#main ul li');
+// logo.classList.add('logo');
+// logo.firstChild.innerHTML = '<img src="img/logo.svg" />';
 ```
 
-Final `_nav.scss` partial:
+Move any logo related CSS from `_base` to `_nav`.
+
+Add a logo div to the HTML:
+
+```html
+  <nav id="main">
+      <div class="logo"><img src="img/logo.svg" /></div>
+    <div class="navitems"></div>
+  </nav>
+```
+
+Comment out the logo related css and check to make sure you can see it (e.g. `navbar.innerHTML = markup;`).
+
+We moved all nav related css into a new partial `_nav.scss`.
+
+Allow the logo to display only on small screens:
 
 ```css
-nav {
-    background: #007eb6;
-    width: 100%;
-    transition: all 0.5s;
-    position: relative;
-    z-index: 1;
-    .fixed-nav & {
-        position: fixed;
-        top: 0;
-        box-shadow: 0 5px 3px rgba(0, 0, 0, 0.2);
-        width: 100%;
-    }
-    ul {
-        display: none;
-        height: 2.5rem;
-        list-style: none;
-        @media(min-width: $break-two){
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-    li {
-        background: $link;
-        flex: 1;
-        padding: 0.5rem;
-        @media(min-width: $break-two){
-        text-align: center;
-        }
-    }
-    a {
-        text-decoration: none;
-        display: inline-block;
-        color: white;
-    }
+.logo img {
+  padding-top: 0.25rem;
+  width: 2.5rem;
 }
-
 .logo {
-    background: white;
-    display: block;
-    @media(min-width: $break-two){
-        display: none;
-    }
-    img {
-        padding-top: 0.25rem;
-        width: 2.5rem;
-    }
+  background: white;
+  @media (min-width: $break-two){
+    display:  none;
+  }
 }
+```
 
-.showmenu #nav-links {
-    display: flex;
-    flex-direction: column;
-}
-  body.fixed-nav .site-wrap {
-    transform: scale(1);
+And allow the navitems to display only on wide screen:
+
+```css
+  .navitems {
+    display: none;
+    @media (min-width: $break-two){
+      display: block;
+    }
   }
 ```
 
-You should consider making the menu disappear on small screen after a selection has been made using a conditional in the hashchange script:
+Temporarily display the navitems on small screens:
+
+```css
+  .navitems {
+    // display: none;
+    @media (min-width: $break-two){
+      display: block;
+    }
+  }
+```
+
+Set the `ul` to display as a row or column depending on browser width using a media query:
+
+```css
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    @media (min-width: $break-two){
+      flex-direction: row;
+      height: 2.5rem;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+```
+
+Format the list items:
+
+```css
+  li {
+    flex: 1;
+    padding: 0.5rem;
+    @media (min-width: $break-two){
+      text-align: center;
+    }
+  }
+```
+
+Rehide the navitems on small screen and code the logo to add a class to the document that we can use to show and hide them.
 
 ```js
-if (window.innerWidth <= 740) {
-  showMenu();
+const logo = document.querySelector('.logo')
+
+logo.addEventListener('click', showMenu);
+
+function showMenu(e) {
+  document.body.classList.toggle('show');
+  e.preventDefault();
 }
-``` -->
+```
+
+Add to `_nav.scss`:
+
+```css
+.show .navitems {
+  display: block !important;
+}
+```
+
+Close the navigation when one of the items is selected:
+
+```js
+function showMenu(e) {
+  document.body.classList.toggle('show');
+  const navLinks = document.querySelectorAll('.navitems a');
+  navLinks.forEach(link => link.addEventListener('click', dump))
+  console.log(navLinks)
+  e.preventDefault();
+}
+
+function dump(){
+  document.body.classList.toggle('show');
+}
+```
+
+### CSS Animation
+
+```css
+  .navitems {
+    // display:none;
+
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s;
+
+    @media (min-width: $break-two){
+      // display:block;
+
+      max-height: 2.5rem;
+      overflow: hidden;
+    }
+  }
+```
+
+```css
+.show .navitems {
+  // display: block !important;
+
+  max-height: 800px;
+}
+```
+
+## CSS Preprocessing in the Editor
+
+Most editors will offer the ability do preprocessing as well as browser refresh.
+
+[Visual Studio Code](https://code.visualstudio.com) offers an array of plug-ins that we can use to perform the SASS preprocessing function. VS Code is remarkably flexible and offers a setting for almost anything you could wish for. See the Visual Studio Code [documentation](https://code.visualstudio.com/docs/getstarted/settings) for changing settings.
+
+[Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass) for VS Code.
+
+Quit the `boom!` process and run `boomlet`.
+
+Install Live SASS Compiler and set the _workspace settings_ as shown:
+
+```js
+{
+    "liveSassCompile.settings.formats": [
+        {
+            "savePath": "app/css",
+            "format": "expanded"
+        }
+    ],
+    "liveSassCompile.settings.excludeList": [
+        "**/node_modules/**",
+        ".vscode/**",
+        "**/other/**"
+    ]
+}
+```
+
+Note the `.vscode` directory that is created for per project settings.
+
+Click the `Watch Sass` button at the bottom of the editor.
+
+
+
+
 
 ## NODE and Express JS
 
