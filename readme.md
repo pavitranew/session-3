@@ -10,8 +10,6 @@ Today we continue to work with NPM, responsive design and start looking at Expre
 
 ## GIT and GITHUB
 
-Since we've created a nice, reusable package.json we should save it for future use.
-
 Git - a version control system originally invented for use developing Linux by Linus Torvalds - integrates with Github to permit collaboration.
 
 There is a simple tutorial for Git on [the Git Website](https://try.github.io/levels/1/challenges/1) which is highly recommended for those new to git and github.
