@@ -5,7 +5,7 @@ Today we continue to work with NPM, responsive design and start looking at Expre
 
 ## Homework
 
-* watch [Crash Course on Express](https://youtu.be/gnsO8-xJ8rs) and follow along in your editor
+* watch a [Crash Course on Express](https://youtu.be/gnsO8-xJ8rs) and follow along in your editor
 * download the done branch of this repo, review the steps below, and get the communication between the form and *your own account* on mLab working
 * Optional - do the Git / Github tutorial at [the Git Website](https://try.github.io/levels/1/challenges/1)
 
