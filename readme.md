@@ -1,4 +1,5 @@
-# III - Responsive Design, ExpressJS and an Introduction to GIT
+# III - Server Side with ExpressJS 
+<!-- and an Introduction to GIT -->
 
 Today we continue to work with NPM, responsive design and start looking at Expressjs - exploring some of its capabilities.
 
@@ -8,7 +9,7 @@ Today we continue to work with NPM, responsive design and start looking at Expre
 * download the `spr2018-done` branch of this repo, review the steps below, and get the communication between the form and your own account on mLab working
 * Optional - do the Git / Github tutorial at [the Git Website](https://try.github.io/levels/1/challenges/1)
 
-## GIT and GITHUB
+<!-- ## GIT and GITHUB
 
 Git - a version control system originally invented for use developing Linux by Linus Torvalds - integrates with Github to permit collaboration.
 
@@ -103,7 +104,7 @@ git remote add origin https://github.com/<nameofgithubrepo>
 git push -u origin master
 ```
 
-Finally - when downloading a github repo use the `clone` method to move it to your local disk while retaining the git history and branches.
+Finally - when downloading a github repo use the `clone` method to move it to your local disk while retaining the git history and branches. -->
 
 <!-- ## Babel
 
@@ -683,7 +684,8 @@ Create a free account with MongoLab. Once you’re done, create a new MongoDB da
 Once you’re done creating the deployment, click into it and create a database user and database password.
 
 ![user](notes/mlab-user.png)
-![user](https://github.com/mean-spring-2017/session-3/blob/master/notes/mlab-user2.jpg)
+
+![user](notes/mlab-user2.jpg)
 
 Remember these because you’re going to use it to connect the database you’ve just created.
 
@@ -691,7 +693,7 @@ Finally, grab the MongoDB url and add it to your MongoClient.connect method. Mak
 
 `MongoClient.connect('mongodb://dannyboynyc:dd2345@ds139969.mlab.com:39969/bcl', (err, database) => {...}`
 
-We want to start our servers only when the database is connected so let’s move app.listen into the connect method. We’re also going to create a db variable to allow us to use the database when we handle requests from the browser.
+We want to start our servers only when the database is connected so let’s move `app.listen` into the connect method. We’re also going to create a db variable to allow us to use the database when we handle requests from the browser.
 
 ```js
 MongoClient.connect('mongodb://dannyboynyc:dd2345@ds139969.mlab.com:39969/bcl', (err, database) => {
