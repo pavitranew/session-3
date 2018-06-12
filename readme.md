@@ -165,6 +165,14 @@ Remember, you can pick and choose commands or create new batches using concurren
 `"boomy!": "concurrently \"npm run start\" \"npm run babel\" "`
  -->
 
+ Clone today's session:
+
+ ```sh
+git clone https://github.com/front-end-intermediate/session-3.git
+cd session-3
+code .
+ ```
+
 ## Responsive Navigation - continued
 
 * from Session II
