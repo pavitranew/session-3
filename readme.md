@@ -437,7 +437,7 @@ server.listen(port, hostname, () => {
 
 The local server we are using (browser sync or live server) won't cut it when it comes to all the features needed to develop a website with the http services we will need.
 
-Express is a framework for building web applications on Node.js. It simplifies the server creation process and allows you to use JavaScript as your server-side language.
+[Express](https://expressjs.com/en/api.html#req) is a framework for building web applications on Node.js. It simplifies the server creation process and allows you to use JavaScript as your server-side language.
 
 Common web-development tasks are not directly supported by Node. If you want to add specific handling for different HTTP verbs (e.g. GET, POST, DELETE, etc.), separately handle requests at different URL paths ("routes"), serve static files, or use templates to dynamically create the response, you will need to write the code yourself or use Express.
 
