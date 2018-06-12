@@ -171,13 +171,14 @@ Remember, you can pick and choose commands or create new batches using concurren
 git clone https://github.com/front-end-intermediate/session-3.git
 cd session-3
 code .
+npm i
  ```
 
-## Responsive Navigation - continued
+## Responsive Design with SASS
 
-* from Session II
+* continued from Session II:
 
-#### Concurrently
+### Concurrently
 
 As it stands we need multiple terminal tabs to run our npm scripts. To improve this we will install a simple utility called Concurrently and write a 'master' npm script.
 
@@ -225,8 +226,6 @@ Note - the code responsible for adding the logo in `main.js` has been commented 
 // logo.firstChild.innerHTML = '<img src="img/logo.svg" />';
 ```
 
-Move any logo related CSS from `_base` to `_nav`.
-
 Add a logo div to the HTML:
 
 ```html
@@ -236,9 +235,11 @@ Add a logo div to the HTML:
   </nav>
 ```
 
-Comment out the logo related css and check to make sure you can see it (e.g. `navbar.innerHTML = markup;`).
+Comment out the .logo related css in `_nav.scss` and make this change in `main.js`:
 
-We moved all nav related css into a new partial `_nav.scss`.
+`navbar.innerHTML = markup;`
+
+Check to make sure you can see the logo in the browser.
 
 Allow the logo to display only on small screens:
 
@@ -312,9 +313,9 @@ const logo = document.querySelector('.logo')
 
 logo.addEventListener('click', showMenu);
 
-function showMenu(e) {
+function showMenu() {
   document.body.classList.toggle('show');
-  e.preventDefault();
+  event.preventDefault();
 }
 ```
 
@@ -329,12 +330,12 @@ Add to `_nav.scss`:
 Close the navigation when one of the items is selected:
 
 ```js
-function showMenu(e) {
+function showMenu() {
   document.body.classList.toggle('show');
   const navLinks = document.querySelectorAll('.navitems a');
   navLinks.forEach(link => link.addEventListener('click', dump))
   console.log(navLinks)
-  e.preventDefault();
+  event.preventDefault();
 }
 
 function dump(){
@@ -873,26 +874,144 @@ Now, refresh your browser and you should be able to see all entries.
 
 ### Integration with the old site
 
-Copy the old `app/index.html` into `index.ejs` and re-enable the `app.use(express.static('app'));` middleware.
-
-Edit our package.json to proxy the browser sync to our express port number and add nodemon to our list of currently running scripts:
+main.js
 
 ```js
- "scripts": {
-    "sassy": "node-sass --watch \"scss/styles.scss\"  --output \"app/css/\" --source-map true",
-    "start": "browser-sync start --proxy 'localhost:9000' --server \"app\" --files \"app\"",
-    "babel": "babel app/js/main.js --watch --source-maps --out-file app/js/main-compiled.js",
-    "boom!": "concurrently \"nodemon app.js\" \"npm run start\" \"npm run sassy\" \"babel\" "
-    "boom-no-sass!": "concurrently \"nodemon app.js\" \"npm run start\" \"babel\" "
-  },
+const nav = document.getElementById('main');
+const navbar = nav.querySelector('.navitems');
+const siteWrap = document.querySelector('.site-wrap');
+
+// fix the navigation to the top of the page
+
+let topOfNav = nav.offsetTop;
+
+function fixNav() {
+  if(window.scrollY >= topOfNav) {
+    document.body.style.paddingTop = nav.offsetHeight + 'px';
+    document.body.classList.add('fixed-nav');
+  } else {
+    document.body.classList.remove('fixed-nav');0000001
+    document.body.style.paddingTop = 0;
+  }
+}
+
+// Show and hide the navigation
+
+const logo = document.querySelector('.logo')
+
+logo.addEventListener('click', showMenu);
+
+function showMenu(e) {
+  document.body.classList.toggle('show');
+  const navLinks = document.querySelectorAll('.navitems a');
+  navLinks.forEach(link => link.addEventListener('click', dump))
+  e.preventDefault();
+}
+
+function dump(){
+  document.body.classList.toggle('show');
+}
+
+// CONTENT
+
+// 1 build the navbar dynamically from database
+
+fetchLab( (content) => {
+  const markup =
+  `<ul>
+  ${content.map(
+    listItem => `<li><a href="#${listItem.label}">${listItem.label}</a></li>`
+  ).join('')}
+  </ul>`;
+  navbar.innerHTML = markup;
+})
+
+// 2 set the content when the user navigates
+
+function navigate() {
+  // substr removes the hash - returns the part of a string between the start index and a number of characters after it.
+  let newloc = location.hash.substr(1);
+  fetchLab((content) => {
+    let newContent = content.filter(contentItem => contentItem.label == newloc);
+    siteWrap.innerHTML = `
+    <h2>${newContent[0].header}</h2>
+    ${newContent[0].image}
+    ${newContent[0].content}
+    `;
+  })
+}
+
+// NEW function for getting data - uses fetch and promises
+
+function fetchLab(callback) {
+  fetch('https://api.mlab.com/api/1/databases/bcl/collections/entries?apiKey=oZ92RXFzah01L1xNSWAZWZrm4kn6zF0n')
+  // .then( res => console.log(res) )
+  .then( res => res.json() )
+  // .then( res => console.log(res) )
+  .then( data => callback(data) )
+}
+
+// OLD - XMLHttpRequest replaced by fetch above
+
+// function fetchData(hash, callback) {
+//   var xhr = new XMLHttpRequest();
+
+//   xhr.onload = function () {
+//     callback(JSON.parse(xhr.response));
+//   };
+
+//   xhr.open('GET', 'http://localhost:3004/content', true);
+//   xhr.send();
+// }
+
+
+if (!location.hash) {
+  location.hash = '#watchlist';
+}
+
+navigate();
+
+window.addEventListener('scroll', fixNav);
+window.addEventListener('hashchange', navigate);
+
 ```
 
-You will have to comment out the onload function in order to see index.ejs:
+app.js
 
 ```js
-// window.onload = function () {
-//   window.location.hash = '#watchlist'
-// }
+const express = require('express');
+const bodyParser = require('body-parser');
+const MongoClient = require('mongodb').MongoClient;
+const app = express();
+const port = 9000;
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.static('app'));
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.post('/entries', (req, res) => {
+  db.collection('entries').save(req.body, (err, result) => {
+    res.redirect('/');
+  });
+});
+
+app.get('*', function(req, res){
+  res.send(`
+    <h1>Oopsy! Page not found</h1>
+    `)
+})
+
+MongoClient.connect('mongodb://dannyboynyc:dd2345@ds139969.mlab.com:39969/bcl', (err, database) => {
+  if (err) return console.log(err);
+  db = database;
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}!`);
+  });
+});
 ```
 
 ### Server Accounts
