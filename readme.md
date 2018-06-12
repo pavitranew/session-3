@@ -886,7 +886,9 @@ Now, refresh your browser and you should be able to see all entries.
 
 ### Integration with the old site
 
-main.js
+Add the form to `app/index.html` and change the link to point to `main-alt.js`
+
+main-alt.js
 
 ```js
 const nav = document.getElementById('main');
@@ -988,7 +990,9 @@ window.addEventListener('hashchange', navigate);
 
 ```
 
-app.js
+Create `app-alt.js` as per below and run it using `nodemon app-alt.js`.
+
+app-alt.js
 
 ```js
 const express = require('express');
