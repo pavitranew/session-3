@@ -178,7 +178,7 @@ npm i
 
 * continued from Session II:
 
-#### Concurrently
+### Concurrently
 
 As it stands we need multiple terminal tabs to run our npm scripts. To improve this we will install a simple utility called Concurrently and write a 'master' npm script.
 
@@ -226,8 +226,6 @@ Note - the code responsible for adding the logo in `main.js` has been commented 
 // logo.firstChild.innerHTML = '<img src="img/logo.svg" />';
 ```
 
-Move any logo related CSS from `_base` to `_nav`.
-
 Add a logo div to the HTML:
 
 ```html
@@ -237,9 +235,11 @@ Add a logo div to the HTML:
   </nav>
 ```
 
-Comment out the logo related css and check to make sure you can see it (e.g. `navbar.innerHTML = markup;`).
+Comment out the .logo related css in `_nav.scss` and make this change in `main.js`:
 
-We moved all nav related css into a new partial `_nav.scss`.
+`navbar.innerHTML = markup;`
+
+Check to make sure you can see the logo in the browser.
 
 Allow the logo to display only on small screens:
 
