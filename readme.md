@@ -43,7 +43,7 @@ git commit -m 'initial commit'
 
 Note: `git commit` without the `-m` flag goes into VI - a text popular UNIX text editor.
 
-To avoid this always using the -m flag when committing. (If you end up in VI, hit ESC and type “:q” to exit.)
+To avoid this always using the -m flag when committing. (If you end up in VI, hit `ESC` and type `:q` to exit and try again.)
 
 * Git Status  - use this command liberally until your familiar with the system.
 
@@ -61,7 +61,7 @@ git checkout <new branchname>
 git branch
 ```
 
-* merge branches:
+Merge branches:
 
 * make sure the branch you want to merge is clear (`$ git status` > clean)
 * checkout the branch you want to merge into
@@ -187,7 +187,7 @@ Add some new scripts:
 
 Examine the output and inspect the html in the developer tool.
 
-Cancel the process with Control-c  and add mapping to the NPM script:
+Cancel the process with ctrl-c  and add mapping to the NPM script:
 
 ```js
   "sassy": "node-sass --watch \"scss\"  --output \"app/css/\" --source-map true"
@@ -392,19 +392,13 @@ Note the `.vscode` directory that is created for per project settings.
 
 Click the `Watch Sass` button at the bottom of the editor.
 
-
-
-
-
 ## NODE and Express JS
 
 ### NODE
 
 A simple node.js [server](https://nodejs.org/en/about/).
 
-Note the use of ES6 const, template strings and arrow functions as well as the request and response variables.
-
-DEMO: Save this as app.js in the project folder and run it using `node script.js`
+DEMO: Save this as `app.js` in the project folder and run it using `node script.js`
 
 ```js
 const http = require('http');
@@ -427,24 +421,26 @@ server.listen(port, hostname, () => {
 
 The local server we are using (browser sync or live server) won't cut it when it comes to all the features needed to develop a website with the http services we will need.
 
-Express is a framework for building web applications on Node.js. It simplifies the server creation process that is already available in Node and allows you to use JavaScript as your server-side language.
+Express is a framework for building web applications on Node.js. It simplifies the server creation process and allows you to use JavaScript as your server-side language.
 
-Aside: Here is the [generator](https://expressjs.com/en/starter/generator.html). 
+Common web-development tasks are not directly supported by Node. If you want to add specific handling for different HTTP verbs (e.g. GET, POST, DELETE, etc.), separately handle requests at different URL paths ("routes"), serve static files, or use templates to dynamically create the response, you will need to write the code yourself or use Express.
+
+<!-- Aside: Here is the [generator](https://expressjs.com/en/starter/generator.html). 
 
 Note the directory structure and the use of [Pug](https://pugjs.org/api/getting-started.html) as the default templating tool.
 
-Let's look at the canonical "Hello world" [example](https://expressjs.com/en/starter/hello-world.html).
+Let's look at the canonical "Hello world" [example](https://expressjs.com/en/starter/hello-world.html). -->
 
 Install express using npm `$ npm install --save express`
 
 Edit `app.js` in the root folder of our project.
 
 ```js
-const express = require('express');
 // require the npm library
-const app = express();
+const express = require('express');
 // create a var for the app to be built using express
 // app is the global variable namespace for the program we are building
+const app = express();
 const port = 9000;
 
 app.get('/', (req, res) => res.send('Hello World!')); // our first route
@@ -465,11 +461,9 @@ Run with `$ node app.js`
 
 Note and test the `watchlist` route above.
 
-Note that console.log is now using the terminal, _not_ the browser's console.
+Note that console.log is now using the terminal, _not_ the browser's console. We are working server side.
 
 Note the [get](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) verb used in our [basic express route](https://expressjs.com/en/starter/basic-routing.html).
-
-Common web-development tasks are not directly supported by Node. If you want to add specific handling for different HTTP verbs (e.g. GET, POST, DELETE, etc.), separately handle requests at different URL paths ("routes"), serve static files, or use templates to dynamically create the response, you will need to write the code yourself. Or simply use ExpressJS.
 
 Add a second route that includes a variable:
 
@@ -485,7 +479,7 @@ app.get('/entry/:name', function(req, res) {
 
 Test in the browser after restarting the node process.: `http://localhost:9000/entry/watchlist`.
 
-Multiple parameters:
+<!-- Multiple parameters:
 
 ```js
 app.get('/entry/:name?/:link', function(req, res) {
@@ -499,13 +493,13 @@ app.get('/entry/:name?/:link', function(req, res) {
 });
 ```
 
-Test in the browser after restarting the node app: `http://localhost:9000/entry/watchlist/test`.
+Test in the browser after restarting the node app: `http://localhost:9000/entry/watchlist/test`. -->
 
 ## Nodemon
 
 We need to restart the server whenever we make a change to app.js. Let’s streamline it by using nodemon.
 
-`$ npm install -save-dev nodemon`
+`$ npm install -g nodemon`
 
 To use nodemon we simply call it (instead of node) in the terminal with the name of our file:
 
@@ -529,7 +523,7 @@ Upon save nodemon should restart the server.
 
 ## Express Middleware
 
-[Middleware](http://expressjs.com/en/resources/middleware.html) is used extensively in Express apps in order to simplify common web development tasks like working with cookies, sessions, user authentication, accessing request POST and JSON data, logging, etc.
+[Middleware](http://expressjs.com/en/resources/middleware.html) is used extensively in Express apps in order to simplify common web development tasks like working with cookies, sessions, user authentication, accessing and sending JSON, logging, etc.
 
 DEMO: We will eventually be using [static](https://expressjs.com/en/starter/static-files.html) middleware (the only middleware _built in_ to Express) to serve files in our exercise.
 
@@ -569,7 +563,7 @@ app.get('/', (req, res) => {
 });
 ```
 
-`__dirname` is a global variable for the directory that contains the app.js.
+(`__dirname` is a global variable for the directory that contains the app.js.)
 
 Create index.html in the top level:
 
@@ -659,50 +653,36 @@ app.post('/entries', (req, res) => {
 
 The object `{ label: '1', header: '2', content: '3' }` is packaged by the body parser and sent to the server as part of the request body.
 
-## MongoDB
+## Database - MongoDB
 
-Express apps can use any database mechanism supported by Node including PostgreSQL, MySQL, Redis, SQLite, MongoDB, etc.
+Express apps can use any database supported by Node including PostgreSQL, MySQL, Redis, SQLite, MongoDB, etc.
 
-We first have to install the driver for the popular NoSQL MongoDB through npm if we want to use it as our database.
+We first have to install the driver for MongoDB using npm.
 
+<!-- why the version number? -->
 `$ npm install mongodb@2.2.5 --save`
 
-Once installed, we can connect to MongoDB through the Mongo.Client‘s connect method as shown in the sample code below:
-
-```js
-var MongoClient = require('mongodb').MongoClient;
-
-MongoClient.connect('mongodb://localhost:27017/animals', function(err, db) {
-  if (err) throw err;
-
-  db
-    .collection('mammals')
-    .find()
-    .toArray(function(err, result) {
-      if (err) throw err;
-
-      console.log(result);
-    });
-});
-```
+Once installed, we can connect to MongoDB through the MongoClient‘s connect method.
 
 Let's start with:
 
 ```js
 const MongoClient = require('mongodb').MongoClient;
 
-MongoClient.connect('link-to-mongodb', (err, database) => {
+MongoClient.connect('<<link-to-mongodb>>', (err, database) => {
   // ... start the server
 });
 ```
 
-The next part is to get the correct link to our database. For our first attempt we'll use a cloud service - [MongoLab](https://mlab.com).
+The next part is to get the correct link to our database. 
+
+For our first attempt we'll use a cloud service - [MongoLab](https://mlab.com).
 
 Create a free account with MongoLab. Once you’re done, create a new MongoDB database and set the plan to sandbox (free) and call it bcl.
 
 Once you’re done creating the deployment, click into it and create a database user and database password.
 
-![user](https://github.com/mean-spring-2017/session-3/blob/master/notes/mlab-user.png)
+![user](notes/mlab-user.png)
 ![user](https://github.com/mean-spring-2017/session-3/blob/master/notes/mlab-user2.jpg)
 
 Remember these because you’re going to use it to connect the database you’ve just created.
