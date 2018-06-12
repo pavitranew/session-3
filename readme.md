@@ -491,9 +491,21 @@ app.get('/entry/:name', function(req, res) {
 });
 ```
 
+```js
+app.get('reverse/:name', (req, res) => {
+  const reverse = [..req.params.name].reverse().join('');
+  res.send(reverse)
+})
+```
+
 Test in the browser after restarting the node process.: `http://localhost:9000/entry/watchlist`.
 
 <!-- Multiple parameters:
+
+app.get('reverse/:name', (req, res) => {
+  const reverse = [..req.params.name].reverse().join('');
+  res.send(reverse)
+})
 
 ```js
 app.get('/entry/:name?/:link', function(req, res) {
