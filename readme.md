@@ -171,11 +171,12 @@ Remember, you can pick and choose commands or create new batches using concurren
 git clone https://github.com/front-end-intermediate/session-3.git
 cd session-3
 code .
+npm i
  ```
 
-## Responsive Navigation - continued
+## Responsive Design with SASS
 
-* from Session II
+* continued from Session II:
 
 #### Concurrently
 
