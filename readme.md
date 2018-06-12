@@ -1,16 +1,15 @@
-# III - Responsive Design, ExpressJS and an Introduction to GIT
+# III - Server Side with ExpressJS 
+<!-- and an Introduction to GIT -->
 
 Today we continue to work with NPM, responsive design and start looking at Expressjs - exploring some of its capabilities.
 
 ## Homework
 
-* watch Traversy's [Crash Course on Express](https://youtu.be/gnsO8-xJ8rs) and follow along in your editor
-* download the `spr2018-done` branch of this repo, review the steps below, and get the communication between the form and your own account on mLab working
+* watch [Crash Course on Express](https://youtu.be/gnsO8-xJ8rs) and follow along in your editor
+* download the done branch of this repo, review the steps below, and get the communication between the form and *your own account* on mLab working
 * Optional - do the Git / Github tutorial at [the Git Website](https://try.github.io/levels/1/challenges/1)
 
-## GIT and GITHUB
-
-Since we've created a nice, reusable package.json we should save it for future use.
+<!-- ## GIT and GITHUB
 
 Git - a version control system originally invented for use developing Linux by Linus Torvalds - integrates with Github to permit collaboration.
 
@@ -45,7 +44,7 @@ git commit -m 'initial commit'
 
 Note: `git commit` without the `-m` flag goes into VI - a text popular UNIX text editor.
 
-To avoid this always using the -m flag when committing. (If you end up in VI, hit ESC and type “:q” to exit.)
+To avoid this always using the -m flag when committing. (If you end up in VI, hit `ESC` and type `:q` to exit and try again.)
 
 * Git Status  - use this command liberally until your familiar with the system.
 
@@ -63,7 +62,7 @@ git checkout <new branchname>
 git branch
 ```
 
-* merge branches:
+Merge branches:
 
 * make sure the branch you want to merge is clear (`$ git status` > clean)
 * checkout the branch you want to merge into
@@ -105,9 +104,9 @@ git remote add origin https://github.com/<nameofgithubrepo>
 git push -u origin master
 ```
 
-Finally - when downloading a github repo use the `clone` method to move it to your local disk while retaining the git history and branches.
+Finally - when downloading a github repo use the `clone` method to move it to your local disk while retaining the git history and branches. -->
 
-## Babel
+<!-- ## Babel
 
 * cd into the session directory install the dev-dependencies and run the script:
 
@@ -164,229 +163,235 @@ and run `npm run boom!`.
 Remember, you can pick and choose commands or create new batches using concurrently. For users using VS Code for SASS transpiling and browser refresh:  `npm run babel` or 
 
 `"boomy!": "concurrently \"npm run start\" \"npm run babel\" "`
-
-<!-- ## Hashes - Solved
-
-```js
-// hashes
-const siteWrap = document.querySelector('.site-wrap');
-
-window.onload = function(){
-  let newContent;
-  if(!window.location.hash){
-    newContent = navItems.filter(
-      navItem => navItem.link == '#watchlist'
-    )
-  } else {
-    newContent = navItems.filter(
-      navItem => navItem.link == window.location.hash
-    )
-  }
-  renderPage(newContent)
-}
-
-window.onhashchange = function() {
-  let newloc = window.location.hash;
-  let newContent = navItems.filter(
-    navItem => navItem.link == newloc
-  )
-  renderPage(newContent);
-  window.scrollTo(0,0);
-}
-
-function renderPage(newContent){
-  siteWrap.innerHTML = `
-  <h2>${newContent[0].header}</h2>
-  ${newContent[0].content}
-  `
-}
-``` -->
+ -->
 
 ## Responsive Navigation - continued
 
-* Reminder - use the meta tag `<meta name="viewport" content="width=device-width, initial-scale=1.0">` to ensure responsive design works on devices.
+* from Session II
 
+#### Concurrently
 
+As it stands we need multiple terminal tabs to run our npm scripts. To improve this we will install a simple utility called Concurrently and write a 'master' npm script.
 
-<!-- Nest and refactor the CSS rules for the nav:
+Stop all processes running in the terminals with Control-c and dispose of them.
 
-```css
-nav {
-    background: #007eb6;
-    width: 100%;
-    transition: all 0.5s;
-    .fixed-nav & {
-        position: fixed;
-        top: 0;
-        box-shadow: 0 5px 3px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
-    ul {
-        list-style: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 2.5rem;
-    }
-    li {
-        flex: 1;
-        text-align: center;
-    }
-    a {
-        text-decoration: none;
-        display: inline-block;
-        color: white;
-    }
-}
+Use the remaining terminal to install and register Concurrently:
 
-.logo {
-    max-width: 0;
-    overflow: hidden;
-    background: white;
-    img {
-        padding-top: 0.25rem;
-        width: 2.5rem;
-    }
-}
-```
+* `$ npm install concurrently --save-dev`
 
-We are using the logo as a hamburger.
-
-Display the logo on small screens while hiding it on large:
-
-```css
-.logo {
-    background: white;
-    display: block;
-    @media(min-width: $break-two){
-        display: none;
-    }
-    img {
-        padding-top: 0.25rem;
-        width: 2.5rem;
-    }
-}
-```
-
-Get the navigation to display vertically on small screens.
-
-Hide the nav-links initially on small screens while maintaining the flex display characteristics on wide:
-
-```css
-ul {
-    display: none;
-    height: 2.5rem;
-    list-style: none;
-    @media(min-width: $break-two){
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-}
-```
-
-Make clicking on the logo show the menu on narrow screens:
+Add some new scripts:
 
 ```js
-const logo = document.querySelector('.logo');
-logo.addEventListener('click', showMenu);
-
-function showMenu() {
-  document.body.classList.toggle('showmenu');
-  event.preventDefault();
-}
+"boom!": "concurrently \"npm run start\" \"npm run json\" \"npm run sassy\" ",
+"boomlet!": "concurrently \"npm run start\" \"npm run json\" "
 ```
 
-Use the class to make the nav visible:
+Examine the output and inspect the html in the developer tool.
 
-```css
-.showmenu #nav-links {
-    display: flex;
-    flex-direction: column;
-}
+Cancel the process with ctrl-c  and add mapping to the NPM script:
+
+```js
+  "sassy": "node-sass --watch \"scss\"  --output \"app/css/\" --source-map true"
 ```
 
-Adjust the formatting of the list items:
+Run all processes:
 
-```css
-li {
-    background: #007eb6;
-    flex: 1;
-    padding: 0.5rem;
-    @media(min-width: $break-two){
-      text-align: center;
-    }
-}
+* `$ npm run boom!`
+
+Note that you may end up with multiple browser tabs by doing this. They are identical.
+
+### Review
+
+* the meta tag `<meta name="viewport" content="width=device-width, initial-scale=1.0">` 
+* `min-width` vs `max-width` in media queries
+* mobile first design using `min-width` to add features to wide screens
+* nesting and media queries
+
+### The Navbar
+
+Note - the code responsible for adding the logo in `main.js` has been commented out:
+
+```js
+// const logo = document.querySelector('#main ul li');
+// logo.classList.add('logo');
+// logo.firstChild.innerHTML = '<img src="img/logo.svg" />';
 ```
 
-Final `_nav.scss` partial:
+Move any logo related CSS from `_base` to `_nav`.
+
+Add a logo div to the HTML:
+
+```html
+  <nav id="main">
+      <div class="logo"><img src="img/logo.svg" /></div>
+    <div class="navitems"></div>
+  </nav>
+```
+
+Comment out the logo related css and check to make sure you can see it (e.g. `navbar.innerHTML = markup;`).
+
+We moved all nav related css into a new partial `_nav.scss`.
+
+Allow the logo to display only on small screens:
 
 ```css
-nav {
-    background: #007eb6;
-    width: 100%;
-    transition: all 0.5s;
-    position: relative;
-    z-index: 1;
-    .fixed-nav & {
-        position: fixed;
-        top: 0;
-        box-shadow: 0 5px 3px rgba(0, 0, 0, 0.2);
-        width: 100%;
-    }
-    ul {
-        display: none;
-        height: 2.5rem;
-        list-style: none;
-        @media(min-width: $break-two){
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-    li {
-        background: $link;
-        flex: 1;
-        padding: 0.5rem;
-        @media(min-width: $break-two){
-        text-align: center;
-        }
-    }
-    a {
-        text-decoration: none;
-        display: inline-block;
-        color: white;
-    }
+.logo img {
+  padding-top: 0.25rem;
+  width: 2.5rem;
 }
-
 .logo {
-    background: white;
-    display: block;
-    @media(min-width: $break-two){
-        display: none;
-    }
-    img {
-        padding-top: 0.25rem;
-        width: 2.5rem;
-    }
+  background: white;
+  @media (min-width: $break-two){
+    display:  none;
+  }
 }
+```
 
-.showmenu #nav-links {
-    display: flex;
-    flex-direction: column;
-}
-  body.fixed-nav .site-wrap {
-    transform: scale(1);
+And allow the navitems to display only on wide screen:
+
+```css
+  .navitems {
+    display: none;
+    @media (min-width: $break-two){
+      display: block;
+    }
   }
 ```
 
-You should consider making the menu disappear on small screen after a selection has been made using a conditional in the hashchange script:
+Temporarily display the navitems on small screens:
+
+```css
+  .navitems {
+    // display: none;
+    @media (min-width: $break-two){
+      display: block;
+    }
+  }
+```
+
+Set the `ul` to display as a row or column depending on browser width using a media query:
+
+```css
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    @media (min-width: $break-two){
+      flex-direction: row;
+      height: 2.5rem;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+```
+
+Format the list items:
+
+```css
+  li {
+    flex: 1;
+    padding: 0.5rem;
+    @media (min-width: $break-two){
+      text-align: center;
+    }
+  }
+```
+
+Rehide the navitems on small screen and code the logo to add a class to the document that we can use to show and hide them.
 
 ```js
-if (window.innerWidth <= 740) {
-  showMenu();
+const logo = document.querySelector('.logo')
+
+logo.addEventListener('click', showMenu);
+
+function showMenu(e) {
+  document.body.classList.toggle('show');
+  e.preventDefault();
 }
-``` -->
+```
+
+Add to `_nav.scss`:
+
+```css
+.show .navitems {
+  display: block !important;
+}
+```
+
+Close the navigation when one of the items is selected:
+
+```js
+function showMenu(e) {
+  document.body.classList.toggle('show');
+  const navLinks = document.querySelectorAll('.navitems a');
+  navLinks.forEach(link => link.addEventListener('click', dump))
+  console.log(navLinks)
+  e.preventDefault();
+}
+
+function dump(){
+  document.body.classList.toggle('show');
+}
+```
+
+### CSS Animation
+
+```css
+  .navitems {
+    // display:none;
+
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s;
+
+    @media (min-width: $break-two){
+      // display:block;
+
+      max-height: 2.5rem;
+      overflow: hidden;
+    }
+  }
+```
+
+```css
+.show .navitems {
+  // display: block !important;
+
+  max-height: 800px;
+}
+```
+
+## CSS Preprocessing in the Editor
+
+Most editors will offer the ability do preprocessing as well as browser refresh.
+
+[Visual Studio Code](https://code.visualstudio.com) offers an array of plug-ins that we can use to perform the SASS preprocessing function. VS Code is remarkably flexible and offers a setting for almost anything you could wish for. See the Visual Studio Code [documentation](https://code.visualstudio.com/docs/getstarted/settings) for changing settings.
+
+[Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass) for VS Code.
+
+Quit the `boom!` process and run `boomlet`.
+
+Install Live SASS Compiler and set the _workspace settings_ as shown:
+
+```js
+{
+    "liveSassCompile.settings.formats": [
+        {
+            "savePath": "app/css",
+            "format": "expanded"
+        }
+    ],
+    "liveSassCompile.settings.excludeList": [
+        "**/node_modules/**",
+        ".vscode/**",
+        "**/other/**"
+    ]
+}
+```
+
+Note the `.vscode` directory that is created for per project settings.
+
+Click the `Watch Sass` button at the bottom of the editor.
 
 ## NODE and Express JS
 
@@ -394,9 +399,7 @@ if (window.innerWidth <= 740) {
 
 A simple node.js [server](https://nodejs.org/en/about/).
 
-Note the use of ES6 const, template strings and arrow functions as well as the request and response variables.
-
-DEMO: Save this as app.js in the project folder and run it using `node script.js`
+DEMO: Save this as `app.js` in the project folder and run it using `node script.js`
 
 ```js
 const http = require('http');
@@ -419,24 +422,26 @@ server.listen(port, hostname, () => {
 
 The local server we are using (browser sync or live server) won't cut it when it comes to all the features needed to develop a website with the http services we will need.
 
-Express is a framework for building web applications on Node.js. It simplifies the server creation process that is already available in Node and allows you to use JavaScript as your server-side language.
+Express is a framework for building web applications on Node.js. It simplifies the server creation process and allows you to use JavaScript as your server-side language.
 
-Aside: Here is the [generator](https://expressjs.com/en/starter/generator.html). 
+Common web-development tasks are not directly supported by Node. If you want to add specific handling for different HTTP verbs (e.g. GET, POST, DELETE, etc.), separately handle requests at different URL paths ("routes"), serve static files, or use templates to dynamically create the response, you will need to write the code yourself or use Express.
+
+<!-- Aside: Here is the [generator](https://expressjs.com/en/starter/generator.html). 
 
 Note the directory structure and the use of [Pug](https://pugjs.org/api/getting-started.html) as the default templating tool.
 
-Let's look at the canonical "Hello world" [example](https://expressjs.com/en/starter/hello-world.html).
+Let's look at the canonical "Hello world" [example](https://expressjs.com/en/starter/hello-world.html). -->
 
 Install express using npm `$ npm install --save express`
 
 Edit `app.js` in the root folder of our project.
 
 ```js
-const express = require('express');
 // require the npm library
-const app = express();
+const express = require('express');
 // create a var for the app to be built using express
 // app is the global variable namespace for the program we are building
+const app = express();
 const port = 9000;
 
 app.get('/', (req, res) => res.send('Hello World!')); // our first route
@@ -457,11 +462,9 @@ Run with `$ node app.js`
 
 Note and test the `watchlist` route above.
 
-Note that console.log is now using the terminal, _not_ the browser's console.
+Note that console.log is now using the terminal, _not_ the browser's console. We are working server side.
 
 Note the [get](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) verb used in our [basic express route](https://expressjs.com/en/starter/basic-routing.html).
-
-Common web-development tasks are not directly supported by Node. If you want to add specific handling for different HTTP verbs (e.g. GET, POST, DELETE, etc.), separately handle requests at different URL paths ("routes"), serve static files, or use templates to dynamically create the response, you will need to write the code yourself. Or simply use ExpressJS.
 
 Add a second route that includes a variable:
 
@@ -477,7 +480,7 @@ app.get('/entry/:name', function(req, res) {
 
 Test in the browser after restarting the node process.: `http://localhost:9000/entry/watchlist`.
 
-Multiple parameters:
+<!-- Multiple parameters:
 
 ```js
 app.get('/entry/:name?/:link', function(req, res) {
@@ -491,13 +494,13 @@ app.get('/entry/:name?/:link', function(req, res) {
 });
 ```
 
-Test in the browser after restarting the node app: `http://localhost:9000/entry/watchlist/test`.
+Test in the browser after restarting the node app: `http://localhost:9000/entry/watchlist/test`. -->
 
 ## Nodemon
 
 We need to restart the server whenever we make a change to app.js. Let’s streamline it by using nodemon.
 
-`$ npm install -save-dev nodemon`
+`$ npm install -g nodemon`
 
 To use nodemon we simply call it (instead of node) in the terminal with the name of our file:
 
@@ -512,7 +515,7 @@ Add this after the last route:
 ```js
 app.get('*', function(req, res){
   res.send(`
-    <h1>Oopsy! Page not found</h1>
+    <h1>Page not found</h1>
     `)
 })
 ```
@@ -521,7 +524,7 @@ Upon save nodemon should restart the server.
 
 ## Express Middleware
 
-[Middleware](http://expressjs.com/en/resources/middleware.html) is used extensively in Express apps in order to simplify common web development tasks like working with cookies, sessions, user authentication, accessing request POST and JSON data, logging, etc.
+[Middleware](http://expressjs.com/en/resources/middleware.html) is used extensively in Express apps in order to simplify common web development tasks like working with cookies, sessions, user authentication, accessing and sending JSON, logging, etc.
 
 DEMO: We will eventually be using [static](https://expressjs.com/en/starter/static-files.html) middleware (the only middleware _built in_ to Express) to serve files in our exercise.
 
@@ -561,7 +564,7 @@ app.get('/', (req, res) => {
 });
 ```
 
-`__dirname` is a global variable for the directory that contains the app.js.
+(`__dirname` is a global variable for the directory that contains the app.js.)
 
 Create index.html in the top level:
 
@@ -651,51 +654,38 @@ app.post('/entries', (req, res) => {
 
 The object `{ label: '1', header: '2', content: '3' }` is packaged by the body parser and sent to the server as part of the request body.
 
-## MongoDB
+## Database - MongoDB
 
-Express apps can use any database mechanism supported by Node including PostgreSQL, MySQL, Redis, SQLite, MongoDB, etc.
+Express apps can use any database supported by Node including PostgreSQL, MySQL, Redis, SQLite, MongoDB, etc.
 
-We first have to install the driver for the popular NoSQL MongoDB through npm if we want to use it as our database.
+We first have to install the driver for MongoDB using npm.
 
+<!-- why the version number? -->
 `$ npm install mongodb@2.2.5 --save`
 
-Once installed, we can connect to MongoDB through the Mongo.Client‘s connect method as shown in the sample code below:
-
-```js
-const MongoClient = require('mongodb').MongoClient;
-
-MongoClient.connect('mongodb://localhost:27017/animals', function(err, db) {
-  if (err) throw err;
-
-  db
-    .collection('mammals')
-    .find()
-    .toArray(function(err, result) {
-      if (err) throw err;
-
-      console.log(result);
-    });
-});
-```
+Once installed, we can connect to MongoDB through the MongoClient‘s connect method.
 
 Let's start with:
 
 ```js
 const MongoClient = require('mongodb').MongoClient;
 
-MongoClient.connect('link-to-mongodb', (err, database) => {
+MongoClient.connect('<<link-to-mongodb>>', (err, database) => {
   // ... start the server
 });
 ```
 
-The next part is to get the correct link to our database. For our first attempt we'll use a cloud service - [MongoLab](https://mlab.com).
+The next part is to get the correct link to our database. 
+
+For our first attempt we'll use a cloud service - [MongoLab](https://mlab.com).
 
 Create a free account with MongoLab. Once you’re done, create a new MongoDB database and set the plan to sandbox (free) and call it bcl.
 
 Once you’re done creating the deployment, click into it and create a database user and database password.
 
-![user](https://github.com/mean-spring-2017/session-3/blob/master/notes/mlab-user.png)
-![user](https://github.com/mean-spring-2017/session-3/blob/master/notes/mlab-user2.jpg)
+![user](notes/mlab-user.png)
+
+![user](notes/mlab-user2.jpg)
 
 Remember these because you’re going to use it to connect the database you’ve just created.
 
@@ -703,7 +693,7 @@ Finally, grab the MongoDB url and add it to your MongoClient.connect method. Mak
 
 `MongoClient.connect('mongodb://dannyboynyc:dd2345@ds139969.mlab.com:39969/bcl', (err, database) => {...}`
 
-We want to start our servers only when the database is connected so let’s move app.listen into the connect method. We’re also going to create a db variable to allow us to use the database when we handle requests from the browser.
+We want to start our servers only when the database is connected so let’s move `app.listen` into the connect method. We’re also going to create a db variable to allow us to use the database when we handle requests from the browser.
 
 ```js
 MongoClient.connect('mongodb://dannyboynyc:dd2345@ds139969.mlab.com:39969/bcl', (err, database) => {
