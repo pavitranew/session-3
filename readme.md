@@ -171,7 +171,7 @@ Remember, you can pick and choose commands or create new batches using concurren
 git clone https://github.com/front-end-intermediate/session-3.git
 cd session-3
 code .
-npm i
+npm install
  ```
 
 ## Responsive Design with SASS
@@ -195,26 +195,59 @@ Add some new scripts:
 "boomlet!": "concurrently \"npm run start\" \"npm run json\" "
 ```
 
-Examine the output and inspect the html in the developer tool.
+DEMO - ``$ npm run boom!`
 
-Cancel the process with ctrl-c  and add mapping to the NPM script:
+* Examine the output and inspect the html in the developer tool.
+* Cancel the process with ctrl-c  and add mapping to the NPM script:
 
 ```js
-  "sassy": "node-sass --watch \"scss\"  --output \"app/css/\" --source-map true"
+  "sassy": "node-sass --watch \"scss\"  --output \"app/css/\" --source-map true",
 ```
 
 Run all processes:
 
 * `$ npm run boom!`
 
-Note that you may end up with multiple browser tabs by doing this. They are identical.
+Note the map file and the styles in the browser developer tool.
 
 ### Review
 
 * the meta tag `<meta name="viewport" content="width=device-width, initial-scale=1.0">` 
 * `min-width` vs `max-width` in media queries
 * mobile first design using `min-width` to add features to wide screens
-* nesting and media queries
+* SASS nesting and media queries
+
+## CSS Preprocessing in the VS Code
+
+Most editors will offer the ability do preprocessing as well as browser refresh.
+
+[Visual Studio Code](https://code.visualstudio.com) offers an array of plug-ins that we can use to perform the SASS preprocessing function. VS Code is remarkably flexible and offers a setting for almost anything you could wish for. See the Visual Studio Code [documentation](https://code.visualstudio.com/docs/getstarted/settings) for changing settings.
+
+[Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass) for VS Code.
+
+Quit the `boom!` process and run `boomlet`.
+
+Install Live SASS Compiler and set the _workspace settings_ as shown:
+
+```js
+{
+    "liveSassCompile.settings.formats": [
+        {
+            "savePath": "app/css",
+            "format": "expanded"
+        }
+    ],
+    "liveSassCompile.settings.excludeList": [
+        "**/node_modules/**",
+        ".vscode/**",
+        "**/other/**"
+    ]
+}
+```
+
+Note the `.vscode` directory that is created for per project settings.
+
+Click the `Watch Sass` button at the bottom of the editor.
 
 ### The Navbar
 
@@ -244,15 +277,16 @@ Check to make sure you can see the logo in the browser.
 Allow the logo to display only on small screens:
 
 ```css
-.logo img {
-  padding-top: 0.25rem;
-  width: 2.5rem;
-}
 .logo {
   background: white;
   @media (min-width: $break-two){
     display:  none;
   }
+}
+
+.logo img {
+  padding-top: 0.25rem;
+  width: 2.5rem;
 }
 ```
 
@@ -300,8 +334,10 @@ Format the list items:
   li {
     flex: 1;
     padding: 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.25);
     @media (min-width: $break-two){
       text-align: center;
+      border-bottom: none;
     }
   }
 ```
@@ -322,7 +358,7 @@ function showMenu() {
 Add to `_nav.scss`:
 
 ```css
-.show .navitems {
+body.show .navitems {
   display: block !important;
 }
 ```
@@ -345,16 +381,18 @@ function dump(){
 
 ### CSS Animation
 
+You cannot animate between `display: block` and `display: none`. These are binary conditions. We will use `max-height` instead.
+
 ```css
   .navitems {
-    // display:none;
+    // display: none;
 
     max-height: 0;
     overflow: hidden;
     transition: all 0.5s;
 
     @media (min-width: $break-two){
-      // display:block;
+      // display: block;
 
       max-height: 2.5rem;
       overflow: hidden;
@@ -366,41 +404,9 @@ function dump(){
 .show .navitems {
   // display: block !important;
 
-  max-height: 800px;
+  max-height: 20rem;
 }
 ```
-
-## CSS Preprocessing in the Editor
-
-Most editors will offer the ability do preprocessing as well as browser refresh.
-
-[Visual Studio Code](https://code.visualstudio.com) offers an array of plug-ins that we can use to perform the SASS preprocessing function. VS Code is remarkably flexible and offers a setting for almost anything you could wish for. See the Visual Studio Code [documentation](https://code.visualstudio.com/docs/getstarted/settings) for changing settings.
-
-[Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass) for VS Code.
-
-Quit the `boom!` process and run `boomlet`.
-
-Install Live SASS Compiler and set the _workspace settings_ as shown:
-
-```js
-{
-    "liveSassCompile.settings.formats": [
-        {
-            "savePath": "app/css",
-            "format": "expanded"
-        }
-    ],
-    "liveSassCompile.settings.excludeList": [
-        "**/node_modules/**",
-        ".vscode/**",
-        "**/other/**"
-    ]
-}
-```
-
-Note the `.vscode` directory that is created for per project settings.
-
-Click the `Watch Sass` button at the bottom of the editor.
 
 ## NODE and Express JS
 
@@ -443,7 +449,7 @@ Let's look at the canonical "Hello world" [example](https://expressjs.com/en/sta
 
 Install express using npm `$ npm install --save express`
 
-Edit `app.js` in the root folder of our project.
+Create `app.js` in the root folder of our project.
 
 ```js
 // require the npm library
@@ -467,9 +473,7 @@ app.listen(port, function() {
 });
 ```
 
-Run with `$ node app.js`
-
-Note and test the `watchlist` route above.
+Run with `$ node app.js` and test the `watchlist` route above.
 
 Note that console.log is now using the terminal, _not_ the browser's console. We are working server side.
 
@@ -529,7 +533,7 @@ app.get('*', function(req, res){
 })
 ```
 
-Upon save nodemon should restart the server.
+Upon save nodemon should restart the server. Test a bad route.
 
 ## Express Middleware
 
@@ -635,6 +639,8 @@ app.post('/entries', (req, res) => {
 });
 ```
 
+Add `res.redirect('/');`
+
 Refresh your browser then click the form button. You should see 'Hello' in your command line.
 
 Express doesn’t handle reading data from the `<form>` element on it’s own. We have to add a middleware package called body-parser to gain this functionality.
@@ -674,7 +680,7 @@ We first have to install the driver for MongoDB using npm.
 
 Once installed, we can connect to MongoDB through the MongoClient‘s connect method.
 
-Let's start with:
+e.g.:
 
 ```js
 const MongoClient = require('mongodb').MongoClient;
@@ -684,7 +690,7 @@ MongoClient.connect('<<link-to-mongodb>>', (err, database) => {
 });
 ```
 
-The next part is to get the correct link to our database. 
+We need to get the correct link to our database.
 
 For our first attempt we'll use a cloud service - [MongoLab](https://mlab.com).
 
@@ -705,6 +711,10 @@ Finally, grab the MongoDB url and add it to your MongoClient.connect method. Mak
 We want to start our servers only when the database is connected so let’s move `app.listen` into the connect method. We’re also going to create a db variable to allow us to use the database when we handle requests from the browser.
 
 ```js
+const MongoClient = require('mongodb').MongoClient;
+```
+
+```js
 MongoClient.connect('mongodb://dannyboynyc:dd2345@ds139969.mlab.com:39969/bcl', (err, database) => {
   if (err) return console.log(err);
   db = database;
@@ -718,7 +728,7 @@ Start the server using `nodemon app.js` and check for any errors.
 
 Now, let’s create a collection - a named location to store data - to store content for our application.
 
-We can create the collection by using the string `entries` while calling MongoDB’s db.collection() method. Since a collection is created if it doesn't already exist we can save our first entry into the database while using the `save` method.
+We can create the collection by using the string `entries` while calling MongoDB’s `db.collection()` method. Since a collection is created if it doesn't already exist we can save our first entry into the database while using the `save` method.
 
 Also, once we’re done saving, we have to redirect the user somewhere (or they’ll be stuck waiting for our server to go the `/entries` which doesn't exist except as a post route).
 
@@ -747,7 +757,7 @@ We can get the entries from MongoLab by using the find method available in the c
 
 ```js
 app.get('/', (req, res) => {
-  var cursor = db.collection('entries').find();
+  const cursor = db.collection('entries').find();
   console.log(cursor);
   res.sendFile(__dirname + '/index.html');
 });
@@ -757,7 +767,7 @@ The find method returns a cursor (A Mongo Object) that probably doesn’t make m
 
 This cursor object contains all entries from our database. It also contains a bunch of other properties and methods that allow us to work with data easily. One such method is the `toArray` method.
 
-The `toArray` method takes in a callback function that allows us to do stuff with entries we retrieved from MongoLab. Let’s try doing a console.log() for the results and see what we get:
+The `toArray` method takes in a callback function that allows us to do stuff with entries we retrieved from MongoLab. Let’s try doing a `console.log()` for the results and see what we get:
 
 ```js
 app.get('/', (req, res) => {
@@ -792,6 +802,8 @@ and in app.js:
 `app.set('view engine', 'ejs')`
 
 Let’s first create an index.ejs file within a views folder so we can start populating data.
+
+Make a `views` folder on the top level of our project and create `index.ejs` inside it.
 
 ```sh
 mkdir views
@@ -989,10 +1001,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('app'));
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
-
 app.post('/entries', (req, res) => {
   db.collection('entries').save(req.body, (err, result) => {
     res.redirect('/');
@@ -1014,7 +1022,7 @@ MongoClient.connect('mongodb://dannyboynyc:dd2345@ds139969.mlab.com:39969/bcl', 
 });
 ```
 
-### Server Accounts
+<!-- ### Server Accounts
 
 Username is the first seven letters of your last name + first letter of first name
 
@@ -1030,4 +1038,4 @@ Test to see if your account is active by entering this URL into a new browser ta
 
 Ensure you are using sFTP (port 22).
 
-Suggested clients: Cyberduck, FileZilla
+Suggested clients: Cyberduck, FileZilla -->
