@@ -313,9 +313,9 @@ const logo = document.querySelector('.logo')
 
 logo.addEventListener('click', showMenu);
 
-function showMenu(e) {
+function showMenu() {
   document.body.classList.toggle('show');
-  e.preventDefault();
+  event.preventDefault();
 }
 ```
 
@@ -330,12 +330,12 @@ Add to `_nav.scss`:
 Close the navigation when one of the items is selected:
 
 ```js
-function showMenu(e) {
+function showMenu() {
   document.body.classList.toggle('show');
   const navLinks = document.querySelectorAll('.navitems a');
   navLinks.forEach(link => link.addEventListener('click', dump))
   console.log(navLinks)
-  e.preventDefault();
+  event.preventDefault();
 }
 
 function dump(){
