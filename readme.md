@@ -1,4 +1,5 @@
-# III - Server Side with ExpressJS 
+# III - Server Side with ExpressJS
+
 <!-- and an Introduction to GIT -->
 
 Today we continue to work with NPM, responsive design and start looking at Expressjs - exploring some of its capabilities.
@@ -6,7 +7,7 @@ Today we continue to work with NPM, responsive design and start looking at Expre
 ## Homework
 
 * watch a [Crash Course on Express](https://youtu.be/gnsO8-xJ8rs) and follow along in your editor
-* download the done branch of this repo, review the steps below, and get the communication between the form and *your own account* on mLab working
+* download the done branch of this repo, review the steps below, and get the communication between the form and _your own account_ on mLab working
 * Optional - do the Git / Github tutorial at [the Git Website](https://try.github.io/levels/1/challenges/1)
 
 <!-- ## GIT and GITHUB
@@ -165,14 +166,14 @@ Remember, you can pick and choose commands or create new batches using concurren
 `"boomy!": "concurrently \"npm run start\" \"npm run babel\" "`
  -->
 
- Clone today's session:
+Clone today's session:
 
- ```sh
+```sh
 git clone https://github.com/front-end-intermediate/session-3.git
 cd session-3
 code .
 npm install
- ```
+```
 
 ## Responsive Design with SASS
 
@@ -198,7 +199,7 @@ Add some new scripts:
 DEMO - ``$ npm run boom!`
 
 * Examine the output and inspect the html in the developer tool.
-* Cancel the process with ctrl-c  and add mapping to the NPM script:
+* Cancel the process with ctrl-c and add mapping to the NPM script:
 
 ```js
   "sassy": "node-sass --watch \"scss\"  --output \"app/css/\" --source-map true",
@@ -212,7 +213,7 @@ Note the map file and the styles in the browser developer tool.
 
 ### Review
 
-* the meta tag `<meta name="viewport" content="width=device-width, initial-scale=1.0">` 
+* the meta tag `<meta name="viewport" content="width=device-width, initial-scale=1.0">`
 * `min-width` vs `max-width` in media queries
 * mobile first design using `min-width` to add features to wide screens
 * SASS nesting and media queries
@@ -279,8 +280,8 @@ Allow the logo to display only on small screens:
 ```css
 .logo {
   background: white;
-  @media (min-width: $break-two){
-    display:  none;
+  @media (min-width: $break-two) {
+    display: none;
   }
 }
 
@@ -293,59 +294,59 @@ Allow the logo to display only on small screens:
 And allow the navitems to display only on wide screen:
 
 ```css
-  .navitems {
-    display: none;
-    @media (min-width: $break-two){
-      display: block;
-    }
+.navitems {
+  display: none;
+  @media (min-width: $break-two) {
+    display: block;
   }
+}
 ```
 
 Temporarily display the navitems on small screens:
 
 ```css
-  .navitems {
-    // display: none;
-    @media (min-width: $break-two){
-      display: block;
-    }
+.navitems {
+  // display: none;
+  @media (min-width: $break-two) {
+    display: block;
   }
+}
 ```
 
 Set the `ul` to display as a row or column depending on browser width using a media query:
 
 ```css
-  ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    @media (min-width: $break-two){
-      flex-direction: row;
-      height: 2.5rem;
-      justify-content: center;
-      align-items: center;
-    }
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  @media (min-width: $break-two) {
+    flex-direction: row;
+    height: 2.5rem;
+    justify-content: center;
+    align-items: center;
   }
+}
 ```
 
 Format the list items:
 
 ```css
-  li {
-    flex: 1;
-    padding: 0.5rem;
-    border-bottom: 1px solid rgba(255,255,255,0.25);
-    @media (min-width: $break-two){
-      text-align: center;
-      border-bottom: none;
-    }
+li {
+  flex: 1;
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  @media (min-width: $break-two) {
+    text-align: center;
+    border-bottom: none;
   }
+}
 ```
 
 Rehide the navitems on small screen and code the logo to add a class to the document that we can use to show and hide them.
 
 ```js
-const logo = document.querySelector('.logo')
+const logo = document.querySelector('.logo');
 
 logo.addEventListener('click', showMenu);
 
@@ -369,12 +370,12 @@ Close the navigation when one of the items is selected:
 function showMenu() {
   document.body.classList.toggle('show');
   const navLinks = document.querySelectorAll('.navitems a');
-  navLinks.forEach(link => link.addEventListener('click', dump))
-  console.log(navLinks)
+  navLinks.forEach(link => link.addEventListener('click', dump));
+  console.log(navLinks);
   event.preventDefault();
 }
 
-function dump(){
+function dump() {
   document.body.classList.toggle('show');
 }
 ```
@@ -384,20 +385,20 @@ function dump(){
 You cannot animate between `display: block` and `display: none`. These are binary conditions. We will use `max-height` instead.
 
 ```css
-  .navitems {
-    // display: none;
+.navitems {
+  // display: none;
 
-    max-height: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s;
+
+  @media (min-width: $break-two) {
+    // display: block;
+
+    max-height: 2.5rem;
     overflow: hidden;
-    transition: all 0.5s;
-
-    @media (min-width: $break-two){
-      // display: block;
-
-      max-height: 2.5rem;
-      overflow: hidden;
-    }
   }
+}
 ```
 
 ```css
@@ -461,7 +462,8 @@ const port = 9000;
 
 app.get('/', (req, res) => res.send('Hello World!')); // our first route
 
-app.get('/watchlist', function(req, res) {  // our second route
+app.get('/watchlist', function(req, res) {
+  // our second route
   res.send(`
     <h1>Watchlist</h1>
     <p>Commentary on Watchlists will go here.</p>
@@ -502,8 +504,8 @@ Test in the browser after restarting the node process.: `http://localhost:9000/e
 
 <!-- Multiple parameters:
 
-app.get('reverse/:name', (req, res) => {
-  const reverse = [..req.params.name].reverse().join('');
+app.get('.reverse/:name', (req, res) => {
+  const reverse = [...req.params.name].reverse().join('');
   res.send(reverse)
 })
 
@@ -538,11 +540,11 @@ We no longer need to restart our server after making changes. Nodemon will watch
 Add this after the last route:
 
 ```js
-app.get('*', function(req, res){
+app.get('*', function(req, res) {
   res.send(`
     <h1>Page not found</h1>
-    `)
-})
+    `);
+});
 ```
 
 Upon save nodemon should restart the server. Test a bad route.
@@ -688,6 +690,7 @@ Express apps can use any database supported by Node including PostgreSQL, MySQL,
 We first have to install the driver for MongoDB using npm.
 
 <!-- why the version number? -->
+
 `$ npm install mongodb@2.2.5 --save`
 
 Once installed, we can connect to MongoDB through the MongoClient‘s connect method.
@@ -912,29 +915,30 @@ const siteWrap = document.querySelector('.site-wrap');
 let topOfNav = nav.offsetTop;
 
 function fixNav() {
-  if(window.scrollY >= topOfNav) {
+  if (window.scrollY >= topOfNav) {
     document.body.style.paddingTop = nav.offsetHeight + 'px';
     document.body.classList.add('fixed-nav');
   } else {
-    document.body.classList.remove('fixed-nav');0000001
+    document.body.classList.remove('fixed-nav');
+    0000001;
     document.body.style.paddingTop = 0;
   }
 }
 
 // Show and hide the navigation
 
-const logo = document.querySelector('.logo')
+const logo = document.querySelector('.logo');
 
 logo.addEventListener('click', showMenu);
 
 function showMenu(e) {
   document.body.classList.toggle('show');
   const navLinks = document.querySelectorAll('.navitems a');
-  navLinks.forEach(link => link.addEventListener('click', dump))
+  navLinks.forEach(link => link.addEventListener('click', dump));
   e.preventDefault();
 }
 
-function dump(){
+function dump() {
   document.body.classList.toggle('show');
 }
 
@@ -942,39 +946,36 @@ function dump(){
 
 // 1 build the navbar dynamically from database
 
-fetchLab( (content) => {
-  const markup =
-  `<ul>
-  ${content.map(
-    listItem => `<li><a href="#${listItem.label}">${listItem.label}</a></li>`
-  ).join('')}
+fetchLab(content => {
+  const markup = `<ul>
+  ${content.map(listItem => `<li><a href="#${listItem.label}">${listItem.label}</a></li>`).join('')}
   </ul>`;
   navbar.innerHTML = markup;
-})
+});
 
 // 2 set the content when the user navigates
 
 function navigate() {
   // substr removes the hash - returns the part of a string between the start index and a number of characters after it.
   let newloc = location.hash.substr(1);
-  fetchLab((content) => {
+  fetchLab(content => {
     let newContent = content.filter(contentItem => contentItem.label == newloc);
     siteWrap.innerHTML = `
     <h2>${newContent[0].header}</h2>
     ${newContent[0].image}
     ${newContent[0].content}
     `;
-  })
+  });
 }
 
 // NEW function for getting data - uses fetch and promises
 
 function fetchLab(callback) {
   fetch('https://api.mlab.com/api/1/databases/bcl/collections/entries?apiKey=oZ92RXFzah01L1xNSWAZWZrm4kn6zF0n')
-  // .then( res => console.log(res) )
-  .then( res => res.json() )
-  // .then( res => console.log(res) )
-  .then( data => callback(data) )
+    // .then( res => console.log(res) )
+    .then(res => res.json())
+    // .then( res => console.log(res) )
+    .then(data => callback(data));
 }
 
 // OLD - XMLHttpRequest replaced by fetch above
@@ -990,7 +991,6 @@ function fetchLab(callback) {
 //   xhr.send();
 // }
 
-
 if (!location.hash) {
   location.hash = '#watchlist';
 }
@@ -999,7 +999,6 @@ navigate();
 
 window.addEventListener('scroll', fixNav);
 window.addEventListener('hashchange', navigate);
-
 ```
 
 Create `app-alt.js` as per below and run it using `nodemon app-alt.js`.
@@ -1023,11 +1022,11 @@ app.post('/entries', (req, res) => {
   });
 });
 
-app.get('*', function(req, res){
+app.get('*', function(req, res) {
   res.send(`
     <h1>Oopsy! Page not found</h1>
-    `)
-})
+    `);
+});
 
 MongoClient.connect('mongodb://dannyboynyc:dd2345@ds139969.mlab.com:39969/bcl', (err, database) => {
   if (err) return console.log(err);
