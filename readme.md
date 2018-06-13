@@ -7,7 +7,7 @@ Today we continue to work with NPM, responsive design and start looking at Expre
 ## Homework
 
 * watch a [Crash Course on Express](https://youtu.be/gnsO8-xJ8rs) and follow along in your editor
-* download the done branch of this repo, review the steps below, and get the communication between the form and _your own account_ on mLab working
+* download the done branch of this repo, review the steps below, and get the communication between the form and _your own account_ on mLab working (see the [instructions for connecting](https://docs.mlab.com/connecting/) to mLab - particulaly the sections 'MongoDB driver' for `app-alt.js` and 'mLab Data API' for `main-alt.js`)
 * Optional - do the Git / Github tutorial at [the Git Website](https://try.github.io/levels/1/challenges/1)
 
 <!-- ## GIT and GITHUB
