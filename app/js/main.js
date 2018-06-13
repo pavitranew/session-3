@@ -2,6 +2,22 @@ const nav = document.getElementById('main');
 const navbar = nav.querySelector('.navitems');
 const siteWrap = document.querySelector('.site-wrap');
 
+const logo = document.querySelector('.logo')
+
+logo.addEventListener('click', showMenu);
+
+function showMenu() {
+  document.body.classList.toggle('show');
+  const navLinks = document.querySelectorAll('.navitems a');
+  navLinks.forEach(link => link.addEventListener('click', dump))
+  console.log(navLinks)
+  event.preventDefault();
+}
+
+function dump(){
+  document.body.classList.toggle('show');
+}
+
 let topOfNav = nav.offsetTop;
 
 function fixNav() {
@@ -21,7 +37,7 @@ fetchData(null, function (content) {
       listItem => `<li><a href="${listItem.link}">${listItem.label}</a></li>`
     ).join('')}
     </ul>`;
-  nav.innerHTML = markup;
+  navbar.innerHTML = markup;
   // const logo = document.querySelector('#main ul li');
   // logo.classList.add('logo');
   // logo.firstChild.innerHTML = '<img src="img/logo.svg" />';
