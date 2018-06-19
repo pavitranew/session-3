@@ -196,7 +196,7 @@ Add some new scripts:
 "boomlet!": "concurrently \"npm run start\" \"npm run json\" "
 ```
 
-DEMO - ``$ npm run boom!`
+DEMO - `$ npm run boom!`
 
 * Examine the output and inspect the html in the developer tool.
 * Cancel the process with ctrl-c and add mapping to the NPM script:
